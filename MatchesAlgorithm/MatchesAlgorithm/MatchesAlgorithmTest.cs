@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
 
 namespace MatchesAlgorithm
 {
@@ -7,8 +8,15 @@ namespace MatchesAlgorithm
     public class MatchesAlgorithmTest
     {
         [TestMethod]
-        public void TestMethod1()
+        public void FirstLetterTest()
         {
+            List<string> UserNameList = new List<string>();
+            Assert.AreEqual("Ovidiu Jurje", UserNameMatches(UserNameList, "O"));
+        }
+
+        List<string> UserNameMatches(List<string> userNameList, string searchLetters)
+        {
+            return new List<string>();
         }
     }
 }
