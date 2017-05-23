@@ -10,16 +10,18 @@ namespace MatchesAlgorithm
         [TestMethod]
         public void FirstLetterTest()
         {
-            List<string> UserNameList = new List<string>();
-            UserNameList.Add("Razvan Tamas");
-            UserNameList.Add("Jurje Ovidiu");
-            UserNameList.Add("Razvan Hidan");
-            Assert.AreEqual("Ovidiu Jurje", UserNameMatches(UserNameList, "O"));
+            var userNameList = new List<string> { "Razvan Tamas", "Ovidiu Jurje", "Razvan Hidan" };
+            CollectionAssert.AreEqual(new[] { "Ovidiu Jurje" }, UserNameMatches(userNameList, "O"));
         }
 
         List<string> UserNameMatches(List<string> userNameList, string searchLetters)
         {
-            return new List<string>();
+            var nameResults = new List<string>();
+            foreach (var userName in userNameList)
+            {
+                if (userName[0] == searchLetters[0]) nameResults.Add(userName);
+            }
+            return nameResults;
         }
     }
 }
