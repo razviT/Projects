@@ -11,59 +11,69 @@ namespace MatchesAlgorithm
         public void FirstLetterTest()
         {
             var userNameList = new List<string> { "Razvan Tamas", "Ovidiu Jurje", "Razvan Hidan" };
-            CollectionAssert.AreEqual(new[] { "Ovidiu Jurje" }, UserNameMatches(userNameList, "O"));
+            CollectionAssert.AreEqual(new[] { "Ovidiu Jurje" }, FindUserNamesWithMatchingLetters(userNameList, "O"));
         }
        
         [TestMethod]
         public void FirstTwoLettersOfFirstNameTest()
         {
             var userNameList = new List<string> { "Razvan Tamas", "Ovidiu Jurje", "Razvan Hidan" };
-            CollectionAssert.AreEqual(new[] { "Razvan Tamas", "Razvan Hidan" },UserNameMatches(userNameList,"Ra"));
+            CollectionAssert.AreEqual(new[] { "Razvan Tamas","Razvan Hidan" },FindUserNamesWithMatchingLetters(userNameList,"Ra"));
         }
         [TestMethod]
-        public void PutUserNamesInArrayTest()
+        public void LettersFromBothNamesTest()
         {
-            CollectionAssert.AreEqual(new string[] { "Tamas", "Razvan", "Ioan" }, PutEachUserNameInArray("Tamas Razvan Ioan"));
+            var userNameList = new List<string> { "Razvan Tamas", "Ovidiu Jurje", "Razvan Hidan" };
+            CollectionAssert.AreEqual(new[] { "Razvan Hidan" }, FindUserNamesWithMatchingLetters(userNameList, "RaHid"));
         }
-
-        List<string> UserNameMatches(List<string> userNameList, string searchLetters)
+        [TestMethod]
+        public void TestIfNoLettersMatch()
+        {
+            var userNameList = new List<string> { "Razvan Tamas", "Ovidiu Jurje", "Razvan Hidan" };           
+            CollectionAssert.AreEqual(new List<string>(), FindUserNamesWithMatchingLetters(userNameList, "PoTo"));
+        }
+        [TestMethod]
+        public void TestIfOnlyFewLettersMatch()
+        {
+            var userNameList = new List<string> { "Razvan Tamas", "Ovidiu Jurje", "Razvan Hidan" };
+            CollectionAssert.AreEqual(new List<string>(), FindUserNamesWithMatchingLetters(userNameList, "RaJu"));
+        }
+       
+        List<string> FindUserNamesWithMatchingLetters(List<string> userNameList, string searchLetters)
         {
             var nameResults = new List<string>();
             foreach (var userName in userNameList)
             {
-                MatchLettersInName(searchLetters, nameResults, userName);
+
+                GoThroughUsers(searchLetters, nameResults, userName);
             }
             return nameResults;
         }
 
-        private static void MatchLettersInName(string searchLetters, List<string> nameResults, string userName)
+        public void GoThroughUsers(string searchLetters, List<string> results, string userName)
         {
+            var userNamesInArray=userName.Split(' ');
+            
             int i = 0;
+            int j = 0;
+            int nameNumber = 0;
             while (i < searchLetters.Length)
             {
-                if (searchLetters[i] == userName[i])
+                if (searchLetters[i] == userNamesInArray[nameNumber][j])
                 {
-                    if (i == searchLetters.Length - 1) nameResults.Add(userName);
+                    if (i == searchLetters.Length - 1) results.Add(userName);
                     i++;
+                    j++;
+                }
+                else if (nameNumber + 1 < userNamesInArray.Length)
+                {
+                    nameNumber++;
+                    j = 0;
                 }
                 else break;
             }
         }
 
-        string[] PutEachUserNameInArray(string userName)
-        {
-            var namesArray = new string[] { "" };
-            int j = 0;
-            for (int i = 0; i < userName.Length; i++)
-            {
-                if (userName[i] != ' ') namesArray[j] += userName[i];
-                else
-                {
-                    Array.Resize(ref namesArray, namesArray.Length + 1);
-                    j++;
-                }
-            }
-            return namesArray;
-        }
+       
     }
 }
