@@ -38,6 +38,12 @@ namespace MatchesAlgorithm
             var userNameList = new List<string> { "Razvan Tamas", "Ovidiu Jurje", "Razvan Hidan" };
             CollectionAssert.AreEqual(new List<string>(), FindUserNamesWithMatchingLetters(userNameList, "RaJu"));
         }
+        [TestMethod]
+        public void TestIfAllLettersAreMatchedInTheSecondName()
+        {
+            var userNameList = new List<string> { "Razvan Tamas", "Ovidiu Jurje", "Razvan Hidan" };
+            CollectionAssert.AreEqual(new[] { "Ovidiu Jurje" }, FindUserNamesWithMatchingLetters(userNameList, "Ju"));
+        }
        
         List<string> FindUserNamesWithMatchingLetters(List<string> userNameList, string searchLetters)
         {
