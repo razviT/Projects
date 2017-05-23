@@ -20,6 +20,11 @@ namespace MatchesAlgorithm
             var userNameList = new List<string> { "Razvan Tamas", "Ovidiu Jurje", "Razvan Hidan" };
             CollectionAssert.AreEqual(new[] { "Razvan Tamas", "Razvan Hidan" },UserNameMatches(userNameList,"Ra"));
         }
+        [TestMethod]
+        public void PutUserNamesInArrayTest()
+        {
+            CollectionAssert.AreEqual(new string[] { "Tamas", "Razvan", "Ioan" }, PutEachUserNameInArray("Tamas Razvan Ioan"));
+        }
 
         List<string> UserNameMatches(List<string> userNameList, string searchLetters)
         {
@@ -43,6 +48,22 @@ namespace MatchesAlgorithm
                 }
                 else break;
             }
+        }
+
+        string[] PutEachUserNameInArray(string userName)
+        {
+            var namesArray = new string[] { "" };
+            int j = 0;
+            for (int i = 0; i < userName.Length; i++)
+            {
+                if (userName[i] != ' ') namesArray[j] += userName[i];
+                else
+                {
+                    Array.Resize(ref namesArray, namesArray.Length + 1);
+                    j++;
+                }
+            }
+            return namesArray;
         }
     }
 }
