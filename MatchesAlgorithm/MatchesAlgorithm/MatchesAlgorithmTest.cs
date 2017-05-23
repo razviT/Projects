@@ -11,6 +11,9 @@ namespace MatchesAlgorithm
         public void FirstLetterTest()
         {
             List<string> UserNameList = new List<string>();
+            UserNameList.Add("Razvan Tamas");
+            UserNameList.Add("Jurje Ovidiu");
+            UserNameList.Add("Razvan Hidan");
             Assert.AreEqual("Ovidiu Jurje", UserNameMatches(UserNameList, "O"));
         }
 
