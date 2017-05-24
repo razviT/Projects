@@ -8,6 +8,11 @@ namespace MatchesAlgorithm
     {
         public int start;
         public int end;
+        public Index(int index)
+            : this(index, index)
+        {
+        }
+
         public Index(int start, int end)
         {
             this.start = start;
@@ -100,6 +105,34 @@ namespace MatchesAlgorithm
             var nameAndIndexTest = FindMatchingNamesAndIndexes(userNameList, "O");
             Assert.AreEqual(nameAndIndexTest[0].index[0].start, 0);
         }
+        [TestMethod]
+        public void TestForMatchingIndexesFive()
+        {
+            var userNameList = new List<string> { "Razvan Tamas", "Ovidiu Jurje", "Razvan Hidan" };
+            var nameAndIndexTest = FindMatchingNamesAndIndexes(userNameList, "RT");
+            CollectionAssert.AreEqual(nameAndIndexTest[0].index, new Index[] { new Index(0, 0), new Index(7, 7) });
+        }
+        [TestMethod]
+        public void TestForMatchingIndexesSix()
+        {
+            var userNameList = new List<string> { "Razvan Tamas", "Ovidiu Jurje", "Razvan Hidan" };
+            var nameAndIndexTest = FindMatchingNamesAndIndexes(userNameList, "OviJu");
+            CollectionAssert.AreEqual(nameAndIndexTest[0].index, new Index[] { new Index(0, 2), new Index(7, 8) });
+        }      
+        [TestMethod]
+        public void TestForMatchingIndexesSeven()
+        {
+            var userNameList = new List<string> { "Razvan Tamas", "Ovidiu Jurje", "Razvan Hidan" };
+            var nameAndIndexTest = FindMatchingNamesAndIndexes(userNameList, "J");
+            Assert.AreEqual(nameAndIndexTest[0].index[0].start, 7);
+        }
+        [TestMethod]
+        public void TestForMatchingIndexesEight()
+        {
+            var userNameList = new List<string> { "Razvan Tamas", "Ovidiu Jurje", "Razvan Hidan" };
+            var nameAndIndexTest = FindMatchingNamesAndIndexes(userNameList, "R");
+            CollectionAssert.AreEqual(nameAndIndexTest[1].index, new Index[] { new Index(0, 0) });
+        }
         List<string> FindUsersNamesWithMatchingLetters(List<string> userNameList, string searchLetters)
         {
             var nameResults = new List<string>();          
@@ -115,7 +148,7 @@ namespace MatchesAlgorithm
         NameAndIndex[] FindMatchingNamesAndIndexes(List<string> userNameList, string searchLetters)
         {
             var nameWithIndex = new NameAndIndex[] { };
-            string orderedSequence = string.Empty;
+            string orderedSequence = string.Empty;          
             foreach (var userName in userNameList)
             {
                 var matchingIndex = new int[searchLetters.Length];
@@ -123,7 +156,7 @@ namespace MatchesAlgorithm
                 {
                     Array.Resize(ref nameWithIndex, nameWithIndex.Length + 1);
                     nameWithIndex[nameWithIndex.Length - 1].name = userName;
-                    nameWithIndex[nameWithIndex.Length - 1].index = PutIndexesInSequences(matchingIndex);
+                    nameWithIndex[nameWithIndex.Length - 1].index = PutNumbersInSequences(matchingIndex);
                 }
                    
             }
@@ -160,31 +193,28 @@ namespace MatchesAlgorithm
             }
             return false;
         }
-        Index[] PutIndexesInSequences(int[] indexes)
+        Index[] PutNumbersInSequences(int[] numbers)
         {
             var sequence = new Index[1];
             int j = 0;
-            sequence[0].start = indexes[0];
-            if (indexes.Length == 1)
+            sequence[0].start = numbers[0];
+            if (numbers.Length == 1)
                 sequence[0].end = sequence[0].start;
-            for (int i = 1; i < indexes.Length; i++)
+            for (int i = 1; i < numbers.Length; i++)
             {
-                if (indexes[i] - indexes[i - 1] == 1)
+                if (numbers[i] - numbers[i - 1] == 1)
                 {
-                    sequence[j].end = indexes[i];
+                    sequence[j].end = numbers[i];
                 }
                 else
                 {
                     j++;
-                    Array.Resize(ref sequence, sequence.Length + 1);
-                    sequence[j].start = indexes[i];
-                    sequence[j].end = indexes[i];
+                    Array.Resize(ref sequence, sequence.Length + 1);                   
+                    sequence[j] = new Index(numbers[i]);
                 }
             }
             return sequence;
         }
-        
-
-       
+              
     }
 }
