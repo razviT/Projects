@@ -111,31 +111,41 @@ namespace MatchesAlgorithm
             var nameAndIndexTest = FindMatchingNamesAndIndexes(userNameList, "Airxsadad");
             CollectionAssert.AreEqual(nameAndIndexTest[0].index, new Index[] { new Index(16,24) });
         }
-
-
+        [TestMethod]
+        public void BiggestCommonPrefixTest()
+        {
+            Assert.AreEqual("pr", BiggestCommonPrefix("prefix", "printesa"));
+        }
         NameAndIndex[] FindMatchingNamesAndIndexes(List<string> userNameList, string searchLetters)
         {
             var nameWithIndex = new NameAndIndex[] { };
             string orderedSequence = string.Empty; 
             foreach (var userName in userNameList)
-            {                
-                var parts = userName.Split(' ');               
-                var matchingIndex = new int[searchLetters.Length];              
-                int differenceBetweenIndexes = 0;
-                for (int partIndex = 0; partIndex < parts.Length; partIndex++)
+            {
+                nameWithIndex = SplitNamesAndCheckForMatches(searchLetters, nameWithIndex, userName);
+
+            }
+            return nameWithIndex;
+        }
+
+        private NameAndIndex[] SplitNamesAndCheckForMatches(string searchLetters, NameAndIndex[] nameWithIndex, string userName)
+        {
+            var parts = userName.Split(' ');
+            var matchingIndex = new int[searchLetters.Length];
+            int differenceBetweenIndexes = 0;
+            for (int partIndex = 0; partIndex < parts.Length; partIndex++)
+            {
+                if (partIndex > 0 && partIndex < parts.Length)
+                    differenceBetweenIndexes += parts[partIndex - 1].Length + 1;
+                if (IsMatching(searchLetters, userName, ref matchingIndex, partIndex, differenceBetweenIndexes))
                 {
-                    if (partIndex > 0 && partIndex<parts.Length)
-                        differenceBetweenIndexes += parts[partIndex - 1].Length + 1;
-                    if (IsMatching(searchLetters, userName, ref matchingIndex, partIndex, differenceBetweenIndexes))
-                    {
-                        Array.Resize(ref nameWithIndex, nameWithIndex.Length + 1);
-                        nameWithIndex[nameWithIndex.Length - 1].name = userName;
-                        nameWithIndex[nameWithIndex.Length - 1].index = PutNumbersInSequences(matchingIndex);
-                    }
-                    
+                    Array.Resize(ref nameWithIndex, nameWithIndex.Length + 1);
+                    nameWithIndex[nameWithIndex.Length - 1].name = userName;
+                    nameWithIndex[nameWithIndex.Length - 1].index = PutNumbersInSequences(matchingIndex);
                 }
 
             }
+
             return nameWithIndex;
         }
 
@@ -143,38 +153,35 @@ namespace MatchesAlgorithm
         {
             var parts = text.Split(' ');
             int j = 0;
-            int i = 0;                             
-            while (i < searchLetters.Length)
-            {              
+            for (int i = 0; i < searchLetters.Length; i++) 
+            {
                 if (searchLetters[i] == parts[partIndex][j])
                 {
-                    matchingIndex[i] =j + differenceBetweenIndexes;
+                    matchingIndex[i] = j + differenceBetweenIndexes;
                     if (i == searchLetters.Length - 1)
-                    {                       
+                    {
                         return true;
-                    }                  
-                    i++;
-                    if (partIndex + 1 < parts.Length && i <= searchLetters.Length - 1 && j==parts[partIndex].Length-1)
-                    {
-                        partIndex++;
-                        differenceBetweenIndexes += parts[partIndex - 1].Length  + 1;
-                        j = 0;
                     }
-                    else
-                    {
-                        j++;
-                    }                 
+                    j = (partIndex + 1 < parts.Length && j == parts[partIndex].Length - 1) ? CheckIfNeededToGoToNextPart(ref partIndex, ref differenceBetweenIndexes, parts) : j + 1;           
                 }
-                else if (partIndex + 1 < parts.Length && i <= searchLetters.Length-1)
+                else if (partIndex + 1 < parts.Length) 
                 {
-                    partIndex++;
-                    differenceBetweenIndexes += parts[partIndex - 1].Length + 1;
-                    j = 0;                  
-                }
-                else break;
+                    j = CheckIfNeededToGoToNextPart(ref partIndex, ref differenceBetweenIndexes, parts);
+                    i--;
+                }                
             }
             return false;
         }
+
+        private static int CheckIfNeededToGoToNextPart(ref int partIndex, ref int differenceBetweenIndexes, string[] parts)
+        {
+            int j;
+            partIndex++;
+            differenceBetweenIndexes += parts[partIndex - 1].Length + 1;
+            j = 0;
+            return j;
+        }
+
         Index[] PutNumbersInSequences(int[] numbers)
         {
             var sequence = new Index[1];
@@ -196,6 +203,21 @@ namespace MatchesAlgorithm
                 }
             }
             return sequence;
+        }
+        string BiggestCommonPrefix(string searchLetters,string part)
+        {
+            int minLength = (searchLetters.Length < part.Length) ? searchLetters.Length : part.Length;
+            var largestCommonPrefix = string.Empty;
+            for (int i = 0; i < minLength; i++)
+            {
+                if (searchLetters[i] == part[i])
+                {
+                    largestCommonPrefix += searchLetters[i];
+                }
+                else
+                    return largestCommonPrefix;
+            }
+            return largestCommonPrefix;
         }
               
     }
