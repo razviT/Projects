@@ -3,12 +3,22 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 
 namespace MatchesAlgorithm
-{   
-     public struct NameAndIndex
+{
+    public struct Index
+    {
+        public int start;
+        public int end;
+        public Index(int start, int end)
+        {
+            this.start = start;
+            this.end = end;
+        }
+    }
+    public struct NameAndIndex
     {
         public string name;
-        public string index;
-        public NameAndIndex(string name,string index)
+        public Index[] index;
+        public NameAndIndex(string name,Index[] index)
         {
             this.name = name;
             this.index = index;
@@ -59,7 +69,7 @@ namespace MatchesAlgorithm
         {
             var userNameList = new List<string> { "Razvan Tamas", "Ovidiu Jurje", "Razvan Hidan" };
             var nameAndIndexTest = FindMatchingNamesAndIndexes(userNameList, "RazvTa");
-            Assert.AreEqual(nameAndIndexTest[0].index, "0-3,7-8");
+            Assert.AreEqual(nameAndIndexTest[0].index[0].end, 3);
             
         }
         [TestMethod]
@@ -69,7 +79,27 @@ namespace MatchesAlgorithm
             var nameAndIndexTest = FindMatchingNamesAndIndexes(userNameList, "Hid");
             Assert.AreEqual(nameAndIndexTest[0].name, "Razvan Hidan");
         }
-       
+        [TestMethod]
+        public void TestForMatchingIndexesTwo()
+        {
+            var userNameList = new List<string> { "Razvan Tamas", "Ovidiu Jurje", "Razvan Hidan" };
+            var nameAndIndexTest = FindMatchingNamesAndIndexes(userNameList, "RazTa");
+            Assert.AreEqual(nameAndIndexTest[0].index[1].start, 7);
+        }
+        [TestMethod]
+        public void TestForMatchingIndexesThree()
+        {
+            var userNameList = new List<string> { "Razvan Tamas", "Ovidiu Jurje", "Razvan Hidan" };
+            var nameAndIndexTest = FindMatchingNamesAndIndexes(userNameList, "RT");
+            Assert.AreEqual(nameAndIndexTest[0].index[1].end, 7);
+        }
+        [TestMethod]
+        public void TestForMatchingIndexesFour()
+        {
+            var userNameList = new List<string> { "Razvan Tamas", "Ovidiu Jurje", "Razvan Hidan" };
+            var nameAndIndexTest = FindMatchingNamesAndIndexes(userNameList, "O");
+            Assert.AreEqual(nameAndIndexTest[0].index[0].start, 0);
+        }
         List<string> FindUsersNamesWithMatchingLetters(List<string> userNameList, string searchLetters)
         {
             var nameResults = new List<string>();          
@@ -92,9 +122,8 @@ namespace MatchesAlgorithm
                 if (IsMatching(searchLetters, userName, ref matchingIndex))
                 {
                     Array.Resize(ref nameWithIndex, nameWithIndex.Length + 1);
-                    nameWithIndex[nameWithIndex.Length-1].name = userName;
-                    orderedSequence = OrderSequenceOfIndexes(matchingIndex);
-                    nameWithIndex[nameWithIndex.Length-1].index = orderedSequence;
+                    nameWithIndex[nameWithIndex.Length - 1].name = userName;
+                    nameWithIndex[nameWithIndex.Length - 1].index = PutIndexesInSequences(matchingIndex);
                 }
                    
             }
@@ -121,7 +150,7 @@ namespace MatchesAlgorithm
                     i++;
                     j++;                  
                 }
-                else if (partIndex + 1 < parts.Length && i < searchLetters.Length-1)
+                else if (partIndex + 1 < parts.Length && i <= searchLetters.Length-1)
                 {
                     partIndex++;
                     differenceBetweenIndexes += parts[partIndex - 1].Length + partIndex; 
@@ -131,28 +160,30 @@ namespace MatchesAlgorithm
             }
             return false;
         }
-        public string OrderSequenceOfIndexes(int[] numbers)
+        Index[] PutIndexesInSequences(int[] indexes)
         {
-            string orderedSequence = string.Empty;
-            int start, end;
-            start = end = numbers[0];          
-            for(int i = 1; i < numbers.Length; i++)
+            var sequence = new Index[1];
+            int j = 0;
+            sequence[0].start = indexes[0];
+            if (indexes.Length == 1)
+                sequence[0].end = sequence[0].start;
+            for (int i = 1; i < indexes.Length; i++)
             {
-                if (numbers[i] == numbers[i - 1] + 1) end = numbers[i];
+                if (indexes[i] - indexes[i - 1] == 1)
+                {
+                    sequence[j].end = indexes[i];
+                }
                 else
                 {
-                    if (start == end) orderedSequence += start + ",";
-                    else
-                    {
-                        orderedSequence += start + "-" + end + ",";
-                        start = end = numbers[i];
-                    }
-                }                               
+                    j++;
+                    Array.Resize(ref sequence, sequence.Length + 1);
+                    sequence[j].start = indexes[i];
+                    sequence[j].end = indexes[i];
+                }
             }
-            if (start == end) orderedSequence += start;
-            else orderedSequence += start + "-" + end;
-            return orderedSequence;
+            return sequence;
         }
+        
 
        
     }
