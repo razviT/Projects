@@ -116,6 +116,16 @@ namespace MatchesAlgorithm
         {
             Assert.AreEqual("pr", BiggestCommonPrefix("prefix", "printesa"));
         }
+        [TestMethod]
+        public void TestForNoCommonPrefix()
+        {
+            Assert.AreEqual("", BiggestCommonPrefix("Hidan", "Tamas"));
+        }
+        [TestMethod]
+        public void TestWhenOneWordIsTheBiggestPrefix()
+        {
+            Assert.AreEqual("Adrian", BiggestCommonPrefix("Adriana", "Adrian"));
+        }
         NameAndIndex[] FindMatchingNamesAndIndexes(List<string> userNameList, string searchLetters)
         {
             var nameWithIndex = new NameAndIndex[] { };
@@ -219,6 +229,6 @@ namespace MatchesAlgorithm
             }
             return largestCommonPrefix;
         }
-              
+   
     }
 }
