@@ -32,43 +32,7 @@ namespace MatchesAlgorithm
     [TestClass]
     public class MatchesAlgorithmTest
     {
-        [TestMethod]
-        public void FirstLetterTest()
-        {
-            var userNameList = new List<string> { "Razvan Tamas", "Ovidiu Jurje", "Razvan Hidan" };
-            CollectionAssert.AreEqual(new[] { "Ovidiu Jurje" }, FindUsersNamesWithMatchingLetters(userNameList, "O"));
-        }
-       
-        [TestMethod]
-        public void FirstTwoLettersOfFirstNameTest()
-        {
-            var userNameList = new List<string> { "Razvan Tamas", "Ovidiu Jurje", "Razvan Hidan" };
-            CollectionAssert.AreEqual(new[] { "Razvan Tamas","Razvan Hidan" },FindUsersNamesWithMatchingLetters(userNameList,"Ra"));
-        }
-        [TestMethod]
-        public void LettersFromBothNamesTest()
-        {
-            var userNameList = new List<string> { "Razvan Tamas", "Ovidiu Jurje", "Razvan Hidan" };
-            CollectionAssert.AreEqual(new[] { "Razvan Hidan" }, FindUsersNamesWithMatchingLetters(userNameList, "RaHid"));
-        }
-        [TestMethod]
-        public void TestIfNoLettersMatch()
-        {
-            var userNameList = new List<string> { "Razvan Tamas", "Ovidiu Jurje", "Razvan Hidan" };           
-            CollectionAssert.AreEqual(new List<string>(), FindUsersNamesWithMatchingLetters(userNameList, "PoTo"));
-        }
-        [TestMethod]
-        public void TestIfOnlyFewLettersMatch()
-        {
-            var userNameList = new List<string> { "Razvan Tamas", "Ovidiu Jurje", "Razvan Hidan" };
-            CollectionAssert.AreEqual(new List<string>(), FindUsersNamesWithMatchingLetters(userNameList, "RaJu"));
-        }
-        [TestMethod]
-        public void TestIfAllLettersAreMatchedInTheSecondName()
-        {
-            var userNameList = new List<string> { "Razvan Tamas", "Ovidiu Jurje", "Razvan Hidan" };
-            CollectionAssert.AreEqual(new[] { "Ovidiu Jurje" }, FindUsersNamesWithMatchingLetters(userNameList, "Ju"));
-        }
+
         [TestMethod]
         public void TestForMatchingIndexes()
         {
@@ -133,46 +97,55 @@ namespace MatchesAlgorithm
             var nameAndIndexTest = FindMatchingNamesAndIndexes(userNameList, "R");
             CollectionAssert.AreEqual(nameAndIndexTest[1].index, new Index[] { new Index(0, 0) });
         }
-        List<string> FindUsersNamesWithMatchingLetters(List<string> userNameList, string searchLetters)
+        [TestMethod]
+        public void TestForMatchingIndexesNine()
         {
-            var nameResults = new List<string>();          
-            foreach (var userName in userNameList)
-            {
-                var matchingIndex=new int[searchLetters.Length];
-                if (IsMatching(searchLetters, userName,ref matchingIndex))
-                    nameResults.Add(userName);
-            }
-            return nameResults;
+            var userNameList = new List<string> { "Razvan Tamas", "Ovidiu Jurje", "Razvan Hidan" };
+            var nameAndIndexTest = FindMatchingNamesAndIndexes(userNameList, "Razvan");
+            CollectionAssert.AreEqual(nameAndIndexTest[0].index, new Index[] { new Index(0, 5) });
         }
+        [TestMethod]
+        public void TestForAdrianAdriana()
+        {
+            var userNameList = new List<string> {"Ainasdas Airasd Airxsadad" };
+            var nameAndIndexTest = FindMatchingNamesAndIndexes(userNameList, "Airxsadad");
+            CollectionAssert.AreEqual(nameAndIndexTest[0].index, new Index[] { new Index(16,24) });
+        }
+
 
         NameAndIndex[] FindMatchingNamesAndIndexes(List<string> userNameList, string searchLetters)
         {
             var nameWithIndex = new NameAndIndex[] { };
-            string orderedSequence = string.Empty;          
+            string orderedSequence = string.Empty; 
             foreach (var userName in userNameList)
-            {
-                var matchingIndex = new int[searchLetters.Length];
-                if (IsMatching(searchLetters, userName, ref matchingIndex))
+            {                
+                var parts = userName.Split(' ');               
+                var matchingIndex = new int[searchLetters.Length];              
+                int differenceBetweenIndexes = 0;
+                for (int partIndex = 0; partIndex < parts.Length; partIndex++)
                 {
-                    Array.Resize(ref nameWithIndex, nameWithIndex.Length + 1);
-                    nameWithIndex[nameWithIndex.Length - 1].name = userName;
-                    nameWithIndex[nameWithIndex.Length - 1].index = PutNumbersInSequences(matchingIndex);
+                    if (partIndex > 0 && partIndex<parts.Length)
+                        differenceBetweenIndexes += parts[partIndex - 1].Length + 1;
+                    if (IsMatching(searchLetters, userName, ref matchingIndex, partIndex, differenceBetweenIndexes))
+                    {
+                        Array.Resize(ref nameWithIndex, nameWithIndex.Length + 1);
+                        nameWithIndex[nameWithIndex.Length - 1].name = userName;
+                        nameWithIndex[nameWithIndex.Length - 1].index = PutNumbersInSequences(matchingIndex);
+                    }
+                    
                 }
-                   
+
             }
             return nameWithIndex;
         }
 
-        public bool IsMatching(string searchLetters, string text, ref int[] matchingIndex)
+        public bool IsMatching(string searchLetters, string text, ref int[] matchingIndex,int partIndex,int differenceBetweenIndexes)
         {
-            var parts = text.Split(' ');           
-            int i = 0;
+            var parts = text.Split(' ');
             int j = 0;
-            int differenceBetweenIndexes = 0;
-            int partIndex = 0;           
+            int i = 0;                             
             while (i < searchLetters.Length)
-            {
-                
+            {              
                 if (searchLetters[i] == parts[partIndex][j])
                 {
                     matchingIndex[i] =j + differenceBetweenIndexes;
@@ -181,12 +154,21 @@ namespace MatchesAlgorithm
                         return true;
                     }                  
                     i++;
-                    j++;                  
+                    if (partIndex + 1 < parts.Length && i <= searchLetters.Length - 1 && j==parts[partIndex].Length-1)
+                    {
+                        partIndex++;
+                        differenceBetweenIndexes += parts[partIndex - 1].Length  + 1;
+                        j = 0;
+                    }
+                    else
+                    {
+                        j++;
+                    }                 
                 }
                 else if (partIndex + 1 < parts.Length && i <= searchLetters.Length-1)
                 {
                     partIndex++;
-                    differenceBetweenIndexes += parts[partIndex - 1].Length + partIndex; 
+                    differenceBetweenIndexes += parts[partIndex - 1].Length + 1;
                     j = 0;                  
                 }
                 else break;
