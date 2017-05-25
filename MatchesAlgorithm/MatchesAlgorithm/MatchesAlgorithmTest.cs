@@ -130,8 +130,15 @@ namespace MatchesAlgorithm
         public void TestForMatchingLettersUsingPrefixes()
         {
             var userNameList = new List<string> { "Razvan Tamas", "Ovidiu Jurje", "Razvan Hidan" };
-            var nameAndIndexTest = FindMatchingNamesAndIndexes(userNameList, "Raz");
-            Assert.AreEqual(nameAndIndexTest[1].name,"Razvan Hidan");
+            var nameAndIndexTest = FindMatchingNamesAndIndexesUsingPrefixes(userNameList, "RazHi");
+            Assert.AreEqual(nameAndIndexTest[0].name,"Razvan Hidan");
+        }
+        [TestMethod]
+        public void TestForMatchingLettersUsingPrefixesTwo()
+        {
+            var userNameList = new List<string> { "Razvan Tamas", "Ovidiu Jurje", "Razvan Hidan Bogdan" };
+            var nameAndIndexTest = FindMatchingNamesAndIndexesUsingPrefixes(userNameList, "RaBog");
+            Assert.AreEqual(nameAndIndexTest[0].name, "Razvan Hidan Bogdan");
         }
         NameAndIndex[] FindMatchingNamesAndIndexes(List<string> userNameList, string searchLetters)
         {
@@ -139,13 +146,13 @@ namespace MatchesAlgorithm
             string orderedSequence = string.Empty; 
             foreach (var userName in userNameList)
             {
-                nameWithIndex = SplitNamesAndCheckForMatches(searchLetters, nameWithIndex, userName);
+                nameWithIndex = SplitNameInPartsAndFindMatches(searchLetters, nameWithIndex, userName);
 
             }
             return nameWithIndex;
         }
 
-        private NameAndIndex[] SplitNamesAndCheckForMatches(string searchLetters, NameAndIndex[] nameWithIndex, string userName)
+        private NameAndIndex[] SplitNameInPartsAndFindMatches(string searchLetters, NameAndIndex[] nameWithIndex, string userName)
         {
             var parts = userName.Split(' ');
             var matchingIndex = new int[searchLetters.Length];
@@ -153,16 +160,16 @@ namespace MatchesAlgorithm
             for (int partIndex = 0; partIndex < parts.Length; partIndex++)
             {
                 if (partIndex > 0 && partIndex < parts.Length)
+                {
                     differenceBetweenIndexes += parts[partIndex - 1].Length + 1;
+                }                    
                 if (IsMatching(searchLetters, userName, ref matchingIndex, partIndex, differenceBetweenIndexes))
                 {
                     Array.Resize(ref nameWithIndex, nameWithIndex.Length + 1);
                     nameWithIndex[nameWithIndex.Length - 1].name = userName;
                     nameWithIndex[nameWithIndex.Length - 1].index = PutNumbersInSequences(matchingIndex);
                 }
-
             }
-
             return nameWithIndex;
         }
 
@@ -179,18 +186,18 @@ namespace MatchesAlgorithm
                     {
                         return true;
                     }
-                    j = (partIndex + 1 < parts.Length && j == parts[partIndex].Length - 1) ? CheckIfNeededToGoToNextPart(ref partIndex, ref differenceBetweenIndexes, parts) : j + 1;           
+                    j = (partIndex + 1 < parts.Length && j == parts[partIndex].Length - 1) ? CheckIfNeededToGoToTheNextPart(ref partIndex, ref differenceBetweenIndexes, parts) : j + 1;           
                 }
                 else if (partIndex + 1 < parts.Length) 
                 {
-                    j = CheckIfNeededToGoToNextPart(ref partIndex, ref differenceBetweenIndexes, parts);
+                    j = CheckIfNeededToGoToTheNextPart(ref partIndex, ref differenceBetweenIndexes, parts);
                     i--;
                 }                
             }
             return false;
         }
 
-        private static int CheckIfNeededToGoToNextPart(ref int partIndex, ref int differenceBetweenIndexes, string[] parts)
+        private static int CheckIfNeededToGoToTheNextPart(ref int partIndex, ref int differenceBetweenIndexes, string[] parts)
         {
             int j;
             partIndex++;
@@ -221,6 +228,11 @@ namespace MatchesAlgorithm
             }
             return sequence;
         }
+
+        //the second way using common prefixes
+    
+
+
         string BiggestCommonPrefix(string searchLetters,string part)
         {
             int minLength = (searchLetters.Length < part.Length) ? searchLetters.Length : part.Length;
@@ -245,7 +257,7 @@ namespace MatchesAlgorithm
                 var parts = userName.Split(' ');
                 for (int partIndex = 0; partIndex < parts.Length; partIndex++)
                 {
-                    if (IsMatchingUsingPrefixes(searchLetters,parts[partIndex]))
+                    if (IsMatchUsingPrefixes(ref searchLetters,parts[partIndex]))
                     {
                         Array.Resize(ref nameWithIndex, nameWithIndex.Length + 1);
                         nameWithIndex[nameWithIndex.Length - 1].name = userName;
@@ -254,13 +266,18 @@ namespace MatchesAlgorithm
             }
             return nameWithIndex;
         }
-        public bool IsMatchingUsingPrefixes(string searchLetters, string text)
+        public bool IsMatchUsingPrefixes(ref string searchLetters, string text)
         {
             var largestCommonPrefix = BiggestCommonPrefix(searchLetters, text);
             if (searchLetters == largestCommonPrefix)
-                return true;           
+                return true;   
+            else if (largestCommonPrefix.Length > 0)
+            {
+                searchLetters = searchLetters.Replace(largestCommonPrefix, "");
+            }
             return false;
         }
+        
 
     }
 }
