@@ -126,6 +126,13 @@ namespace MatchesAlgorithm
         {
             Assert.AreEqual("Adrian", BiggestCommonPrefix("Adriana", "Adrian"));
         }
+        [TestMethod]
+        public void TestForMatchingLettersUsingPrefixes()
+        {
+            var userNameList = new List<string> { "Razvan Tamas", "Ovidiu Jurje", "Razvan Hidan" };
+            var nameAndIndexTest = FindMatchingNamesAndIndexes(userNameList, "Raz");
+            Assert.AreEqual(nameAndIndexTest[1].name,"Razvan Hidan");
+        }
         NameAndIndex[] FindMatchingNamesAndIndexes(List<string> userNameList, string searchLetters)
         {
             var nameWithIndex = new NameAndIndex[] { };
@@ -229,6 +236,31 @@ namespace MatchesAlgorithm
             }
             return largestCommonPrefix;
         }
-   
+        NameAndIndex[] FindMatchingNamesAndIndexesUsingPrefixes(List<string> userNameList, string searchLetters)
+        {
+            var nameWithIndex = new NameAndIndex[] { };
+            string orderedSequence = string.Empty;           
+            foreach (var userName in userNameList)
+            {
+                var parts = userName.Split(' ');
+                for (int partIndex = 0; partIndex < parts.Length; partIndex++)
+                {
+                    if (IsMatchingUsingPrefixes(searchLetters,parts[partIndex]))
+                    {
+                        Array.Resize(ref nameWithIndex, nameWithIndex.Length + 1);
+                        nameWithIndex[nameWithIndex.Length - 1].name = userName;
+                    }
+                }
+            }
+            return nameWithIndex;
+        }
+        public bool IsMatchingUsingPrefixes(string searchLetters, string text)
+        {
+            var largestCommonPrefix = BiggestCommonPrefix(searchLetters, text);
+            if (searchLetters == largestCommonPrefix)
+                return true;           
+            return false;
+        }
+
     }
 }
