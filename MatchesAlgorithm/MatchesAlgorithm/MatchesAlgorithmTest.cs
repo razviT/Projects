@@ -141,13 +141,19 @@ namespace MatchesAlgorithm
                 if (searchLetters[i] == part[i])
                 {
                     largestCommonPrefix += searchLetters[i];
-                    Array.Resize(ref matchingIndex, matchingIndex.Length + 1);
-                    matchingIndex[matchingIndex.Length - 1] = differenceInIndex + i;
+                    matchingIndex = CreateMatchingIndexArray(matchingIndex, differenceInIndex, i);
                 }
                 else
                     return largestCommonPrefix;
             }
             return largestCommonPrefix;
+        }
+
+        private static int[] CreateMatchingIndexArray(int[] matchingIndex, int differenceInIndex, int i)
+        {
+            Array.Resize(ref matchingIndex, matchingIndex.Length + 1);
+            matchingIndex[matchingIndex.Length - 1] = differenceInIndex + i;
+            return matchingIndex;
         }
 
         NameAndIndex[] FindMatchingNamesAndIndexesUsingCommonPrefixes(List<string> userNameList, string searchLetters)
