@@ -39,10 +39,10 @@ namespace MatchesAlgorithm
             var userNameList = new List<string> { "Razvan Tamas", "Ovidiu Jurje", "Razvan Hidan" };
             var nameAndIndexTest = FindMatchingNamesAndIndexesUsingCommonPrefixes(userNameList, "RazvTa");
             Assert.AreEqual(nameAndIndexTest[0].index[0].end, 3);
-            
+
         }
         [TestMethod]
-        public void TestForMatchingNames()
+        public void TestForMatchigLettersUsingPrefixesThree()
         {
             var userNameList = new List<string> { "Razvan Tamas", "Ovidiu Jurje", "Razvan Hidan" };
             var nameAndIndexTest = FindMatchingNamesAndIndexesUsingCommonPrefixes(userNameList, "Hid");
@@ -82,13 +82,13 @@ namespace MatchesAlgorithm
             var userNameList = new List<string> { "Razvan Tamas", "Ovidiu Jurje", "Razvan Hidan" };
             var nameAndIndexTest = FindMatchingNamesAndIndexesUsingCommonPrefixes(userNameList, "OviJu");
             CollectionAssert.AreEqual(nameAndIndexTest[0].index, new Index[] { new Index(0, 2), new Index(7, 8) });
-        }      
+        }
         [TestMethod]
         public void TestForMatchingIndexesSeven()
         {
             var userNameList = new List<string> { "Razvan Tamas", "Ovidiu Jurje", "Razvan Hidan" };
             var nameAndIndexTest = FindMatchingNamesAndIndexesUsingCommonPrefixes(userNameList, "J");
-            Assert.AreEqual(nameAndIndexTest[0].index[0].start, 7);
+            CollectionAssert.AreEqual(nameAndIndexTest[0].index, new Index[] { new Index(-1, -1), new Index(7, 7) });
         }
         [TestMethod]
         public void TestForMatchingIndexesEight()
@@ -104,13 +104,13 @@ namespace MatchesAlgorithm
             var nameAndIndexTest = FindMatchingNamesAndIndexesUsingCommonPrefixes(userNameList, "Razvan");
             CollectionAssert.AreEqual(nameAndIndexTest[0].index, new Index[] { new Index(0, 5) });
         }
-              
+
         [TestMethod]
         public void TestForMatchingLettersUsingPrefixes()
         {
             var userNameList = new List<string> { "Razvan Tamas", "Ovidiu Jurje", "Razvan Hidan" };
             var nameAndIndexTest = FindMatchingNamesAndIndexesUsingCommonPrefixes(userNameList, "RazHi");
-            Assert.AreEqual(nameAndIndexTest[0].name,"Razvan Hidan");
+            Assert.AreEqual(nameAndIndexTest[0].name, "Razvan Hidan");
         }
         [TestMethod]
         public void TestForMatchingLettersUsingPrefixesTwo()
@@ -120,108 +120,87 @@ namespace MatchesAlgorithm
             Assert.AreEqual(nameAndIndexTest[0].name, "Razvan Hidan Bogdan");
         }
         [TestMethod]
-        public void TestForMatchingIndexesUsingPrefixes()
+        public void TestForMatchingIndexesTen()
         {
             var userNameList = new List<string> { "Razvan Tamas", "Ovidiu Jurje", "Razvan Hidan Bogdan" };
             var nameAndIndexTest = FindMatchingNamesAndIndexesUsingCommonPrefixes(userNameList, "RaBog");
-            CollectionAssert.AreEqual(nameAndIndexTest[0].index, new Index[] { new Index(13, 15) });
+            CollectionAssert.AreEqual(nameAndIndexTest[0].index, new Index[] { new Index(0, 1),new Index(-1,-1), new Index(13,15)});
         }
-       
-
-        //the second way using common prefixes
-
-
-
-        string BiggestCommonPrefix(string searchLetters, string part,ref int[] matchingIndex, int differenceInIndex)
+        [TestMethod]
+        public void TestForBiggestCommonPrefix()
         {
-            int minLength = (searchLetters.Length < part.Length) ? searchLetters.Length : part.Length;
-            var largestCommonPrefix = string.Empty;           
-            for (int i = 0; i < minLength; i++)
-            {
-                if (searchLetters[i] == part[i])
-                {
-                    largestCommonPrefix += searchLetters[i];
-                    matchingIndex = CreateMatchingIndexArray(matchingIndex, differenceInIndex, i);
-                }
-                else
-                    return largestCommonPrefix;
-            }
-            return largestCommonPrefix;
+            Assert.AreEqual(BiggestCommonPrefix("Rad", "Razvana"), "Ra");
         }
 
-        private static int[] CreateMatchingIndexArray(int[] matchingIndex, int differenceInIndex, int i)
+        string BiggestCommonPrefix(string searchLetters, string text)
         {
-            Array.Resize(ref matchingIndex, matchingIndex.Length + 1);
-            matchingIndex[matchingIndex.Length - 1] = differenceInIndex + i;
-            return matchingIndex;
+            if (string.IsNullOrEmpty(searchLetters) || string.IsNullOrEmpty(text) || searchLetters[0] != text[0])
+                return "";
+            return (searchLetters[0] + BiggestCommonPrefix(searchLetters.Substring(1), text.Substring(1)));
         }
 
         NameAndIndex[] FindMatchingNamesAndIndexesUsingCommonPrefixes(List<string> userNameList, string searchLetters)
         {
             var nameWithIndex = new NameAndIndex[] { };
-            string orderedSequence = string.Empty;           
+            string orderedSequence = string.Empty;
             foreach (var userName in userNameList)
             {
-                CheckEachUserForMatchingLetters(ref searchLetters, ref nameWithIndex, userName);
+                CheckEachUserForMatchingLetters(searchLetters, userName, ref nameWithIndex);
             }
             return nameWithIndex;
         }
 
-        private void CheckEachUserForMatchingLetters(ref string searchLetters, ref NameAndIndex[] nameWithIndex, string userName)
-        {
-            int differenceInIndex = 0;
-            var matchingIndex = new int[0];
+        private void CheckEachUserForMatchingLetters(string searchLetters, string userName, ref NameAndIndex[] nameWithIndex)
+        {           
             var parts = userName.Split(' ');
+            var matchingIndex = new Index[]{ };
+            int differenceInIndex = 0;
+            var searchLettersTwo = searchLetters;
             for (int partIndex = 0; partIndex < parts.Length; partIndex++)
             {
                 if (partIndex > 0 && partIndex < parts.Length)
                 {
                     differenceInIndex += parts[partIndex - 1].Length + 1;
                 }
-                if (IsMatchUsingCommonPrefixes(ref searchLetters, parts[partIndex], ref matchingIndex, differenceInIndex))
-                {
+
+                Array.Resize(ref matchingIndex, matchingIndex.Length + 1);
+                matchingIndex[matchingIndex.Length-1] = FindmatchingIndexes(ref searchLettersTwo, parts[partIndex],differenceInIndex); 
+                
+                if (IsMatchingLetters(ref searchLetters, parts[partIndex]))
+                {                   
                     Array.Resize(ref nameWithIndex, nameWithIndex.Length + 1);
                     nameWithIndex[nameWithIndex.Length - 1].name = userName;
-                    nameWithIndex[nameWithIndex.Length - 1].index = PutNumbersInSequences(matchingIndex);
+                    nameWithIndex[nameWithIndex.Length - 1].index = matchingIndex;
                 }
             }
         }
 
-        public bool IsMatchUsingCommonPrefixes(ref string searchLetters, string text, ref int[] matchingIndex, int differenceInIndex)
-        {
-            var largestCommonPrefix = BiggestCommonPrefix(searchLetters, text, ref matchingIndex, differenceInIndex);
+        public bool IsMatchingLetters(ref string searchLetters, string text)
+        {          
+            var largestCommonPrefix = BiggestCommonPrefix(searchLetters, text);
             if (searchLetters == largestCommonPrefix)
-                return true;   
-            else if (largestCommonPrefix.Length > 0)
-            {
-                searchLetters = searchLetters.Replace(largestCommonPrefix, "");
+            {                
+                return true;
+            }
+            if (largestCommonPrefix.Length > 0)
+            {               
+                searchLetters = searchLetters.Substring(largestCommonPrefix.Length);              
             }
             return false;
-        }
-
-        Index[] PutNumbersInSequences(int[] numbers)
+        }   
+        public Index FindmatchingIndexes(ref string searchLetters,string text, int differenceInIndex)
         {
-            var sequence = new Index[1];
-            int j = 0;
-            sequence[0].start = numbers[0];
-            if (numbers.Length == 1)
-                sequence[0].end = sequence[0].start;
-            for (int i = 1; i < numbers.Length; i++)
+            var largestCommonPrefix = BiggestCommonPrefix(searchLetters, text);
+            var matchingIndex = new Index  (-1,-1);
+            if (largestCommonPrefix.Length > 0)
             {
-                if (numbers[i] - numbers[i - 1] == 1)
-                {
-                    sequence[j].end = numbers[i];
-                }
-                else
-                {
-                    j++;
-                    Array.Resize(ref sequence, sequence.Length + 1);
-                    sequence[j] = new Index(numbers[i]);
-                }
+                matchingIndex = new Index(differenceInIndex, differenceInIndex + largestCommonPrefix.Length - 1);
+                searchLetters = searchLetters.Substring(largestCommonPrefix.Length);
             }
-            return sequence;
+            return matchingIndex;
+                
         }
-
-
+        
     }
+    
 }
