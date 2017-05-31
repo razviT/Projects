@@ -7,9 +7,24 @@ namespace TextEncription
     public class UnitTest1
     {
         [TestMethod]
-        public void TestMethod1()
+        public void TestEncryptionOne()
         {
             Assert.AreEqual(EncryptText("Ceva text",3),"Caee xvtt");
+        }
+        [TestMethod]
+        public void TestEncryptionTwo()
+        {
+            Assert.AreEqual(EncryptText("123456", 5), "162345");
+        }
+        [TestMethod]
+        public void TestEncryptionThree()
+        {
+            Assert.AreEqual(EncryptText("encrypt this text for me", 4), "eyt trnpht  ctiefmr sxoe");
+        }
+        [TestMethod]
+        public void TestDecryption()
+        {
+            Assert.AreEqual(EncryptText("Caee xvtt",3),"Ceva text");
         }
 
         string EncryptText(string text,int columns)
@@ -28,8 +43,8 @@ namespace TextEncription
             encryptedText += text[i];
             while (j < text.Length - columns)
             {
-                encryptedText += text[j + columns];
                 j += columns;
+                encryptedText += text[j];                
             }
             return encryptedText;
         }
