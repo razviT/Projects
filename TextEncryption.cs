@@ -9,12 +9,12 @@ namespace TextEncription
         [TestMethod]
         public void TestEncryptionOne()
         {
-            Assert.AreEqual(EncryptText("Ceva text",3),"Caee xvtt");
+            Assert.AreEqual(EncryptText("Ceva text", 3), "Caee xvtt");
         }
         [TestMethod]
         public void TestEncryptionTwo()
         {
-            Assert.AreEqual(EncryptText("123456", 5), "162345");
+            Assert.AreEqual(EncryptText("1234567", 4), "1526374");
         }
         [TestMethod]
         public void TestEncryptionThree()
@@ -24,29 +24,41 @@ namespace TextEncription
         [TestMethod]
         public void TestDecryption()
         {
-            Assert.AreEqual(EncryptText("Caee xvtt",3),"Ceva text");
+            Assert.AreEqual(DecryptText("Caee xvtt", 3), "Ceva text");
         }
-
-        string EncryptText(string text,int columns)
+        [TestMethod]
+        public void TestDecryptionTwo()
         {
-            var encryptedText = string.Empty;           
+            Assert.AreEqual(DecryptText("eyt trnpht  ctiefmr sxoe", 4), "encrypt this text for me");
+        }
+        [TestMethod]
+        public void TestDectryptionThree()
+        {
+            Assert.AreEqual(DecryptText("1526374", 4), "1234567");
+        }
+        string EncryptText(string text, int columns)
+        {
+            var encryptedText = string.Empty;
             for (int i = 0; i < columns; i++)
             {
-                encryptedText = EncryptForEachColumn(text, columns, encryptedText, i);
+                encryptedText += EncryptForColumn(text, columns, i);
             }
             return encryptedText;
         }
 
-        private static string EncryptForEachColumn(string text, int columns, string encryptedText, int i)
+        private static string EncryptForColumn(string text, int columns, int currentColumn)
         {
-            int j = i;
-            encryptedText += text[i];
-            while (j < text.Length - columns)
+            var encryptedText = "";
+            for (int j = currentColumn; j < text.Length; j += columns)
             {
-                j += columns;
-                encryptedText += text[j];                
+                encryptedText += text[j];
             }
             return encryptedText;
+        }
+        string DecryptText(string text, int columns)
+        {
+            columns = (int)Math.Ceiling((double)text.Length / columns);
+            return EncryptText(text, columns);
         }
     }
 
