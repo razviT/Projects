@@ -40,18 +40,18 @@ namespace ObjectLesson
             students[i - 1] = temporary;
         }
 
-        public Student[] FindStudentsWithCertainGradeAverage(decimal grade)
+        public Student[] FindStudentsWithCertainGrade(decimal grade)
         {
-            Student[] studentsWithCertainGradeAverage = new Student[0];
+            Student[] studentsWithCertainGrade = new Student[0];
             for (int i = 0; i < students.Length; i++)
             {
                 if (students[i].GetGeneralGradeAverage() == grade)
                 {
-                    Array.Resize(ref studentsWithCertainGradeAverage, studentsWithCertainGradeAverage.Length + 1);
-                    studentsWithCertainGradeAverage[studentsWithCertainGradeAverage.Length - 1] = students[i];
+                    Array.Resize(ref studentsWithCertainGrade, studentsWithCertainGrade.Length + 1);
+                    studentsWithCertainGrade[studentsWithCertainGrade.Length - 1] = students[i];
                 }
             }
-            return studentsWithCertainGradeAverage;  
+            return studentsWithCertainGrade;  
         }
         
         public Student FindStudentWithMostTens()
@@ -98,12 +98,12 @@ namespace ObjectLesson
             return inOrder;
         }
 
-        public bool CheckIfRegistriesHaveTheSameStudents(Student[] otherStudents)
+        public bool CheckIfRegistriesMatch(Student[] otherStudents)
         {
-            int minLength = Math.Min(students.Length, otherStudents.Length);
+            int minLength = Math.Min(students.Length, otherStudents.Length);            
             for(int i = 0; i < minLength; i++)
             {
-                if (!students[i].IsSameStudent(otherStudents[i]))
+                if (!students[i].IsSameName(otherStudents[i]) && !students[i].IsSameGradesForEachSubject(otherStudents[i]))
                 {
                     return false;
                 }

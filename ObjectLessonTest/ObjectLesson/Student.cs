@@ -44,7 +44,7 @@ namespace ObjectLesson
                 return true;
             }
         }
-        public bool IsSameStudent(Student student)
+        public bool IsSameName(Student student)
         {
             if (student.name == name)
             {
@@ -54,6 +54,19 @@ namespace ObjectLesson
             {
                 return false;
             }
+        }
+        public bool IsSameGradesForEachSubject(Student student)
+        {
+            bool sameGradesForEachSubject = true;
+            int minLength = Math.Min(student.subjects.Length, subjects.Length);
+            for (int i = 0; i < minLength; i++)
+            {
+                if (subjects[i].AreTheSameGrades(student.subjects[i]) == false)
+                {
+                    sameGradesForEachSubject = false;
+                }
+            }
+            return sameGradesForEachSubject;
         }
         
     }
