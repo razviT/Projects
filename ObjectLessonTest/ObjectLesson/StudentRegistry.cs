@@ -14,12 +14,12 @@ namespace ObjectLesson
             while (inAlphabeticalOrder == false)
             {
                 inAlphabeticalOrder = true;
-                inAlphabeticalOrder = SwapUntilInAlphabeticalOrder(inAlphabeticalOrder);
+                inAlphabeticalOrder = SwapStudentsUntilInAlphabeticalOrder(inAlphabeticalOrder);
             }
             return students;
         }
 
-        private bool SwapUntilInAlphabeticalOrder(bool order)
+        private bool SwapStudentsUntilInAlphabeticalOrder(bool order)
         {
             for (int i = 1; i < students.Length; i++)
             {               
@@ -79,12 +79,12 @@ namespace ObjectLesson
             while (inOrderOfGrade == false) 
             {
                 inOrderOfGrade = true;
-                inOrderOfGrade = SwapUntilInOrderOfGeneralGradeAverage(inOrderOfGrade);
+                inOrderOfGrade = SwapStudentsUntilInOrderOfGeneralGradeAverage(inOrderOfGrade);
             }
             return students;
         }
 
-        private bool SwapUntilInOrderOfGeneralGradeAverage(bool inOrder)
+        private bool SwapStudentsUntilInOrderOfGeneralGradeAverage(bool inOrder)
         {
             for (int i = 1; i < students.Length; i++)
             {
@@ -102,7 +102,9 @@ namespace ObjectLesson
             for(int i = 0; i < students.Length; i++)
             {
                 if (!students[i].IsSameStudent(otherStudents[i]))
+                {
                     return false;
+                }
             }
             return true;
         }
