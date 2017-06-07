@@ -36,14 +36,14 @@ namespace ObjectLesson
         [TestMethod]
         public void FindStudentsWithCertainGradeAverageTest()
         {
-            StudentRegistry studentsWithCertainGradeAverage = new StudentRegistry(studentRegistry.FindStudentWithCertainGradeAverage(8.22m));
+            StudentRegistry studentsWithCertainGradeAverage = new StudentRegistry(studentRegistry.FindStudentsWithCertainGradeAverage(8.22m));
             Assert.AreEqual(studentsWithCertainGradeAverage.CheckIfRegistriesHaveTheSameStudents(new Student[] { new Student("razvan", new Subject[] { new Subject(new int[] { 10, 7, 10 }), new Subject(new int[] { 9, 8, 10 }), new Subject(new int[] { 7, 8, 5 }) }) }), true);
         }
 
         [TestMethod]
         public void FindStudentWithMostTensTest()
         {
-            Assert.AreEqual(studentRegistry.FindStudentWithMostTens().IsSameName(new Student("ovidiu", new Subject[] { new Subject(new int[] { 9, 8, 10 }), new Subject(new int[] { 7, 8, 7 }), new Subject(new int[] { 10, 10, 10, 10 }) })), true);
+            Assert.AreEqual(studentRegistry.FindStudentWithMostTens().IsSameStudent(new Student("ovidiu", new Subject[] { new Subject(new int[] { 9, 8, 10 }), new Subject(new int[] { 7, 8, 7 }), new Subject(new int[] { 10, 10, 10, 10 }) })), true);
         }
             
         [TestMethod]
@@ -58,17 +58,17 @@ namespace ObjectLesson
         [TestMethod]
         public void FindStudentWithLowestGradeAverageTest()
         {       
-            Assert.AreEqual(studentRegistry.FindStudentWithLowestGradeAverage().IsSameName(new Student("simplon", new Subject[] { new Subject(new int[] { 5, 4, 8 }), new Subject(new int[] { 10, 8, 10 }), new Subject(new int[] { 9, 5 }) })), true);
+            Assert.AreEqual(studentRegistry.FindStudentWithLowestGradeAverage().IsSameStudent(new Student("simplon", new Subject[] { new Subject(new int[] { 5, 4, 8 }), new Subject(new int[] { 10, 8, 10 }), new Subject(new int[] { 9, 5 }) })), true);
         }
 
         [TestMethod]
-        public void FindStudentWithLoestGradeAverageTestTwo()
+        public void FindStudentWithLowestGradeAverageTestTwo()
         {
-            Assert.AreEqual(studentRegistry.FindStudentWithLowestGradeAverage().IsSameName(new Student("razvan", new Subject[] { new Subject(new int[] { 10, 7, 10 }), new Subject(new int[] { 9, 8, 10 }), new Subject(new int[] { 7, 8, 5 }) })), false);
+            Assert.AreEqual(studentRegistry.FindStudentWithLowestGradeAverage().IsSameStudent(new Student("razvan", new Subject[] { new Subject(new int[] { 10, 7, 10 }), new Subject(new int[] { 9, 8, 10 }), new Subject(new int[] { 7, 8, 5 }) })), false);
         }
 
         [TestMethod]
-        public void OrderStudentsInORderOfTheirGeneralGradeAverageTestTwo()
+        public void OrderStudentsInOrderOfTheirGeneralGradeAverageTestTwo()
         {
             StudentRegistry orderedStudents = new StudentRegistry(studentRegistry.OrderStudentsInOrderOfTheirGeneralGradeAverage());
             Assert.AreEqual(orderedStudents.CheckIfRegistriesHaveTheSameStudents(new Student[] { new Student("razvan", new Subject[] { new Subject(new int[] { 10, 7, 10 }), new Subject(new int[] { 8, 8, 7 }), new Subject(new int[] { 7, 8, 5 }) }),
@@ -79,7 +79,7 @@ namespace ObjectLesson
         [TestMethod]
         public void FindStudentsWithMostTensTestTwo()
         {
-            Assert.AreEqual(studentRegistry.FindStudentWithMostTens().IsSameName(new Student("razvan", new Subject[] { new Subject(new int[] { 10, 7, 10 }), new Subject(new int[] { 8, 8, 7 }), new Subject(new int[] { 7, 8, 5 }) })), false);
+            Assert.AreEqual(studentRegistry.FindStudentWithMostTens().IsSameStudent(new Student("razvan", new Subject[] { new Subject(new int[] { 10, 7, 10 }), new Subject(new int[] { 8, 8, 7 }), new Subject(new int[] { 7, 8, 5 }) })), false);
         }
     }
 }
