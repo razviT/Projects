@@ -1,4 +1,5 @@
-﻿namespace ObjectLesson
+﻿
+namespace ObjectLesson
 {
     class Subject
     {
@@ -24,6 +25,6 @@
                 count = (grades[i] == 10) ? count + 1 : count;
             }
             return count;
-        }
+        }      
     }
 }

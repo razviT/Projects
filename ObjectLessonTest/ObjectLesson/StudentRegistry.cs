@@ -1,4 +1,5 @@
 ﻿using System;
+
 namespace ObjectLesson
 {
     class StudentRegistry
@@ -73,7 +74,7 @@ namespace ObjectLesson
             return studentWithLowestGradeAverage;
         }
 
-        public Student[] OrderStudentsInOrderOfTheirGeneralGradeAverage()
+        public Student[] ArrangeInOrderOfGrades()
         {
             bool inOrderOfGrade = false;
             while (inOrderOfGrade == false) 
@@ -98,8 +99,9 @@ namespace ObjectLesson
         }
 
         public bool CheckIfRegistriesHaveTheSameStudents(Student[] otherStudents)
-        {           
-            for(int i = 0; i < students.Length; i++)
+        {
+            int minLength = Math.Min(students.Length, otherStudents.Length);
+            for(int i = 0; i < minLength; i++)
             {
                 if (!students[i].IsSameStudent(otherStudents[i]))
                 {
