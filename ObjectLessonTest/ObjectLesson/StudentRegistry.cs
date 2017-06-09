@@ -1,14 +1,28 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace ObjectLesson
 {
-    class StudentRegistry
+
+    class StudentRegistry : IEnumerable<Student>
     {
         private Student[] students;
         public StudentRegistry(Student[] students)
         {
             this.students = students;
         }
+
+        public IEnumerator<Student> GetEnumerator()
+        {
+            return new StudentRegistryEnumerator<Student>(students); 
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return ((IEnumerable<Student>)students).GetEnumerator();
+        }
+
         public Student[] OrderStudentsInAlphabeticalOrder()
         {
             var inAlphabeticalOrder = false;
@@ -42,7 +56,7 @@ namespace ObjectLesson
 
         public Student[] FindStudentsWithCertainGrade(decimal grade)
         {
-            Student[] studentsWithCertainGrade = new Student[0];
+            Student[] studentsWithCertainGrade = new Student[0];            
             for (int i = 0; i < students.Length; i++)
             {
                 if (students[i].GetGeneralGradeAverage() == grade)
@@ -53,7 +67,12 @@ namespace ObjectLesson
             }
             return studentsWithCertainGrade;  
         }
-        
+
+        internal Student GetFirst()
+        {
+            return students[0];
+        }
+
         public Student FindStudentWithMostTens()
         {
             var studentWithMostTens = students[0];
@@ -96,19 +115,65 @@ namespace ObjectLesson
                 }
             }
             return inOrder;
-        }
-
-        public bool CheckIfRegistriesMatch(Student[] otherStudents)
+        }  
+        
+        public Student MoveToWantedStudent(int wantedPosition)
         {
-            int minLength = Math.Min(students.Length, otherStudents.Length);            
-            for(int i = 0; i < minLength; i++)
+            IEnumerator i = students.GetEnumerator();
+            for(int k = 0; k < wantedPosition; k++)
             {
-                if (!students[i].IsSameName(otherStudents[i]) && !students[i].IsSameGradesForEachSubject(otherStudents[i]))
-                {
-                    return false;
-                }
-            }
-            return true;
+                i.MoveNext();
+            }          
+            return (Student)i.Current;
         }
     }
+
+    public class StudentRegistryEnumerator<Student> : IEnumerator<Student>
+    {
+        int position = -1;
+        public Student[] students;
+        public StudentRegistryEnumerator(Student[] students)
+        {
+            this.students = students;
+        }
+        public Student Current
+        {
+            get
+            {
+                try
+                {
+                    return students[position];
+                }
+                catch (IndexOutOfRangeException)
+                {
+                    throw new InvalidOperationException();
+                }
+            }
+        }
+
+        object IEnumerator.Current
+        {
+            get
+            {
+                return Current;
+            }
+        }
+
+        public void Dispose()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool MoveNext()
+        {
+            position++;
+            return (position < students.Length);
+        }
+
+        public void Reset()
+        {
+            position = -1;
+        }
+    }
+
 }

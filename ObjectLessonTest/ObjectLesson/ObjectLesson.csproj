@@ -51,10 +51,10 @@
     <Compile Include="StudentRegistry.cs" />
     <Compile Include="Student.cs" />
     <Compile Include="Subject.cs" />
-    <Compile Include="TestStudent.cs" />
-    <Compile Include="TestStudentRegistry.cs" />
+    <Compile Include="StudentTest.cs" />
+    <Compile Include="StudentRegistryTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TestSubject.cs" />
+    <Compile Include="SubjectTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -9,7 +9,7 @@ namespace ObjectLesson
             this.grades = grades;
         }
 
-        public decimal GetAverageGradeForSubject()
+        public decimal GetAverageGrade()
         {
             decimal sum = 0;
             for(int i = 0; i < grades.Length; i++)
@@ -19,7 +19,7 @@ namespace ObjectLesson
             return sum / grades.Length;
         }
 
-        public decimal CountGradesOfTenForEachSubject()
+        public decimal CountGradesOfTen()
         {
             decimal count = 0;
             for(int i = 0; i < grades.Length; i++)
@@ -27,21 +27,6 @@ namespace ObjectLesson
                 count = (grades[i] == 10) ? count + 1 : count;
             }
             return count;
-        }  
-
-        public bool AreTheSameGrades(Subject subject)
-        {
-            int minlength = Math.Min(grades.Length, subject.grades.Length);
-            bool sameGrades = true;
-            for(int i = 0; i < minlength; i++)
-            {
-                if (grades[i] != subject.grades[i])
-                {
-                    sameGrades = false;
-                }
-            }
-            return sameGrades;
-        }
-        
+        }    
     }
 }

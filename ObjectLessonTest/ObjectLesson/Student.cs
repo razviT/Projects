@@ -18,7 +18,7 @@ namespace ObjectLesson
             decimal sum = 0;
             for (int i = 0; i < subjects.Length; i++)
             {
-                sum += subjects[i].GetAverageGradeForSubject();
+                sum += subjects[i].GetAverageGrade();
             }
             return decimal.Round(sum / subjects.Length, 2, MidpointRounding.AwayFromZero);
         }
@@ -28,7 +28,7 @@ namespace ObjectLesson
             decimal count = 0;
             for (int i = 0; i < subjects.Length; i++)
             {
-                count += subjects[i].CountGradesOfTenForEachSubject();
+                count += subjects[i].CountGradesOfTen();
             }
             return count;
         }
@@ -43,31 +43,6 @@ namespace ObjectLesson
             {
                 return true;
             }
-        }
-        public bool IsSameName(Student student)
-        {
-            if (student.name == name)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-        public bool IsSameGradesForEachSubject(Student student)
-        {
-            bool sameGradesForEachSubject = true;
-            int minLength = Math.Min(student.subjects.Length, subjects.Length);
-            for (int i = 0; i < minLength; i++)
-            {
-                if (subjects[i].AreTheSameGrades(student.subjects[i]) == false)
-                {
-                    sameGradesForEachSubject = false;
-                }
-            }
-            return sameGradesForEachSubject;
-        }
-        
+        }      
     }
 }
