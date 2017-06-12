@@ -1,0 +1,12 @@
+C:\Users\TamasR\Documents\Projects\RepairCenter\RepairCenter\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll
+C:\Users\TamasR\Documents\Projects\RepairCenter\RepairCenter\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.Interface.dll
+C:\Users\TamasR\Documents\Projects\RepairCenter\RepairCenter\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll
+C:\Users\TamasR\Documents\Projects\RepairCenter\RepairCenter\bin\Debug\RepairCenter.dll
+C:\Users\TamasR\Documents\Projects\RepairCenter\RepairCenter\bin\Debug\RepairCenter.pdb
+C:\Users\TamasR\Documents\Projects\RepairCenter\RepairCenter\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.dll
+C:\Users\TamasR\Documents\Projects\RepairCenter\RepairCenter\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll
+C:\Users\TamasR\Documents\Projects\RepairCenter\RepairCenter\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.xml
+C:\Users\TamasR\Documents\Projects\RepairCenter\RepairCenter\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.xml
+C:\Users\TamasR\Documents\Projects\RepairCenter\RepairCenter\obj\Debug\RepairCenter.csprojResolveAssemblyReference.cache
+C:\Users\TamasR\Documents\Projects\RepairCenter\RepairCenter\obj\Debug\RepairCenter.dll
+C:\Users\TamasR\Documents\Projects\RepairCenter\RepairCenter\obj\Debug\RepairCenter.pdb
