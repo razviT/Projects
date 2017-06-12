@@ -15,7 +15,7 @@ namespace ObjectLesson
 
         public IEnumerator<Student> GetEnumerator()
         {
-            return new StudentRegistryEnumerator<Student>(students); 
+            return new StudentRegistryEnumerator(students); 
         }
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -117,7 +117,7 @@ namespace ObjectLesson
             return inOrder;
         }  
         
-        public Student MoveToWantedStudent(int wantedPosition)
+        public Student GetWantedStudent(int wantedPosition)
         {
             IEnumerator i = students.GetEnumerator();
             for(int k = 0; k < wantedPosition; k++)
@@ -128,26 +128,21 @@ namespace ObjectLesson
         }
     }
 
-    public class StudentRegistryEnumerator<Student> : IEnumerator<Student>
+    public class StudentRegistryEnumerator : IEnumerator<Student>
     {
         int position = -1;
         public Student[] students;
+
         public StudentRegistryEnumerator(Student[] students)
         {
             this.students = students;
         }
+
         public Student Current
         {
             get
             {
-                try
-                {
-                    return students[position];
-                }
-                catch (IndexOutOfRangeException)
-                {
-                    throw new InvalidOperationException();
-                }
+                return students[position];
             }
         }
 

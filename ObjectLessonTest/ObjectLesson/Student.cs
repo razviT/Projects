@@ -2,7 +2,7 @@
 
 namespace ObjectLesson
 {
-    class Student
+    public class Student
     {
         private string name;
         private Subject[] subjects;

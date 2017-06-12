@@ -1,7 +1,7 @@
 ﻿using System;
 namespace ObjectLesson
 {
-    class Subject
+    public class Subject
     {
         private int[] grades;
         public Subject(int[] grades)
