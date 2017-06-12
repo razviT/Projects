@@ -15,7 +15,7 @@ namespace RepairCenter
         public void SortCasesAccordingToPriorityTest()
         {
             var testCases = new RepairCases(new RepairCase[] { phone, tv, iPhone, boombox });
-            CollectionAssert.AreEqual(testCases.SortCasesAccordingToPriority().ToArray(),
+            CollectionAssert.AreEqual(testCases.SortCasesAccordingToPriority(),
                 new RepairCase[] { tv, phone, boombox, iPhone });
         }
 
@@ -23,7 +23,7 @@ namespace RepairCenter
         public void SortCasesAccordingToPriorityTestTwo()
         {
             var testCases = new RepairCases(new RepairCase[] { iPhone, boombox, phone, tv });
-            CollectionAssert.AreEqual(testCases.SortCasesAccordingToPriority().ToArray(),
+            CollectionAssert.AreEqual(testCases.SortCasesAccordingToPriority(),
                 new RepairCase[] { tv, boombox, phone, iPhone });
         }
 
