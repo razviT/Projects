@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace RepairCenter
@@ -10,35 +11,33 @@ namespace RepairCenter
         private static readonly RepairCase tv = new RepairCase("tv", "High");
         private static readonly RepairCase iPhone = new RepairCase("iphone", "Low");
         private static readonly RepairCase boombox = new RepairCase("Boombox", "Medium");
-       
+
         [TestMethod]
-        public void SortCasesAccordingToPriorityTest()
+        public void TestAddRepairCaseInOrderOfPriority()
         {
-            var testCases = new RepairCases(new RepairCase[] { phone, tv, iPhone, boombox });
-            CollectionAssert.AreEqual(testCases.SortCasesAccordingToPriority(),
-                new RepairCase[] { tv, phone, boombox, iPhone });
+            CollectionAssert.AreEqual(new RepairCases(new List<RepairCase> { })
+                .AddRepairCaseInOrderOfPriority(tv), new RepairCase[] { tv });
         }
 
         [TestMethod]
-        public void SortCasesAccordingToPriorityTestTwo()
+        public void TestAddRepairCaseInOrderOfPriorityTwo()
         {
-            var testCases = new RepairCases(new RepairCase[] { iPhone, boombox, phone, tv });
-            CollectionAssert.AreEqual(testCases.SortCasesAccordingToPriority(),
-                new RepairCase[] { tv, boombox, phone, iPhone });
+            CollectionAssert.AreEqual(new RepairCases(new List<RepairCase> { tv })
+                .AddRepairCaseInOrderOfPriority(iPhone), new RepairCase[] { tv, iPhone });
         }
 
         [TestMethod]
-        public void GetWantedCaseTest()
+        public void TestAddRepairCaseInOrderOfPriorityThree()
         {
-            var testCases = new RepairCases(new RepairCase[] { iPhone, boombox, phone, tv });
-            Assert.AreEqual(testCases.GetWantedCase(2), boombox);
+            CollectionAssert.AreEqual(new RepairCases(new List<RepairCase> { tv, iPhone })
+                .AddRepairCaseInOrderOfPriority(boombox), new RepairCase[] { tv, boombox, iPhone });
         }
 
         [TestMethod]
-        public void GetWantedCaseTestTwo()
+        public void TestAddRepairCaseInOrderOfPriorityFour ()
         {
-            var testCases = new RepairCases(new RepairCase[] { iPhone, boombox, phone, tv });
-            Assert.AreEqual(testCases.GetWantedCase(4), tv);
-        }
+            CollectionAssert.AreEqual(new RepairCases(new List<RepairCase> { tv, boombox, iPhone })
+                .AddRepairCaseInOrderOfPriority(phone), new RepairCase[] { tv, boombox, phone, iPhone });
+        }   
     }
 }

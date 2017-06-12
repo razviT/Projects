@@ -1,19 +1,21 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+
 namespace RepairCenter
 {
     public class RepairCases : IEnumerable<RepairCase>
     {
-        private RepairCase[] allRepairCases;
-        public RepairCases(RepairCase[] allRepairCases)
+        private List<RepairCase> allRepairCases;
+        public RepairCases(List<RepairCase> allRepairCases)
         {
             this.allRepairCases = allRepairCases;
         }
 
         public IEnumerator<RepairCase> GetEnumerator()
         {
-            return new RepairCasesEnumerator<RepairCase>(allRepairCases);
+            return new RepairCasesEnumerator(allRepairCases);
         }
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -21,55 +23,28 @@ namespace RepairCenter
             return ((IEnumerable<RepairCase>)allRepairCases).GetEnumerator();
         }
 
-        public RepairCase[] SortCasesAccordingToPriority()
+        public List<RepairCase> AddRepairCaseInOrderOfPriority(RepairCase newRepairCase)
         {
-            bool areInOrder = false;
-            while (areInOrder == false)
+            int index = 0;
+            foreach (RepairCase repairCase in allRepairCases)
             {
-                areInOrder = IsInOrder();
+                if (repairCase.ConvertPriorityToInteger() < newRepairCase.ConvertPriorityToInteger())
+                {
+                    allRepairCases.Insert(index, newRepairCase);
+                    return allRepairCases;
+                }
+                index++;
             }
+            allRepairCases.Insert(allRepairCases.Count, newRepairCase);
             return allRepairCases;
         }
-
-        public RepairCase GetWantedCase(int wantedCase)
-        {
-            IEnumerator enumerator = allRepairCases.GetEnumerator();
-            for (int i = 0; i < wantedCase; i++)
-            {
-                enumerator.MoveNext();
-            }
-            return (RepairCase)enumerator.Current;
-        }
-
-        private bool IsInOrder()
-        {
-            bool areInOrder = true;
-            for (int i = 1; i < allRepairCases.Length; i++)
-            {
-                if (allRepairCases[i].ConvertPriorityToInteger() > allRepairCases[i - 1].ConvertPriorityToInteger())
-                {
-                    SwapCases(i);
-                    areInOrder = false;
-                }
-            }
-
-            return areInOrder;
-        }
-
-        private void SwapCases(int i)
-        {
-            var temp = allRepairCases[i];
-            allRepairCases[i] = allRepairCases[i - 1];
-            allRepairCases[i - 1] = temp;
-        }
-    }
-
-    public class RepairCasesEnumerator<T> : IEnumerator<RepairCase>
+    } 
+    public class RepairCasesEnumerator : IEnumerator<RepairCase>
     {
-        private RepairCase[] allRepairCases;
+        private List<RepairCase> allRepairCases;
         public int position = -1;
 
-        public RepairCasesEnumerator(RepairCase[] allRepairCases)
+        public RepairCasesEnumerator(List<RepairCase> allRepairCases)
         {
             this.allRepairCases = allRepairCases;
         }
@@ -78,14 +53,7 @@ namespace RepairCenter
         {
             get
             {
-                try
-                {
-                    return allRepairCases[position];
-                }
-                catch (IndexOutOfRangeException)
-                {
-                    throw new InvalidOperationException();
-                }
+                return allRepairCases[position];
             }
         }
 
@@ -105,7 +73,7 @@ namespace RepairCenter
         public bool MoveNext()
         {
             position++;
-            return (position < allRepairCases.Length);
+            return (position < allRepairCases.Count-1);
         }
 
         public void Reset()
