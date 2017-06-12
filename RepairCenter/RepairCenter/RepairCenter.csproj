@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="RepairCase.cs" />
     <Compile Include="RepairCases.cs" />
+    <Compile Include="RepairCasesTest.cs" />
     <Compile Include="RepairCaseTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

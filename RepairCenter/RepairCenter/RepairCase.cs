@@ -15,11 +15,11 @@
             switch (priority)
             {
                 case "Low":
-                    return  1;                    
-                case "medium":
+                    return 1;                    
+                case "Medium":
                     return 2;                   
                 case "High":
-                    return  3;                  
+                    return 3;                  
             }
             return 0;
         }
