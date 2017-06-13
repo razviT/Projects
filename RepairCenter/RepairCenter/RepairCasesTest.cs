@@ -33,15 +33,19 @@ namespace RepairCenter
         {
             var repairCasesThree = new RepairCases(new List<RepairCase> { tv, iPhone });
             repairCasesThree.Add(boombox);          
-            CollectionAssert.AreEqual(new RepairCases(new List<RepairCase> { tv, boombox, iPhone }).ToArray(), repairCasesThree.ToArray());
+            CollectionAssert.AreEqual(new RepairCases(new List<RepairCase> { tv, boombox, iPhone }).ToArray(),
+                repairCasesThree.ToArray());
         }
 
         [TestMethod]
         public void TestAddRepairCaseInOrderOfPriorityFour ()
         {
-            var repairCasesFour = new RepairCases(new List<RepairCase> { tv, boombox, iPhone });
-            repairCasesFour.Add(phone);
-            CollectionAssert.AreEqual(new RepairCases(new List<RepairCase> { tv, boombox, phone, iPhone }).ToArray(), repairCasesFour.ToArray());
+            var repairCasesFour = new RepairCases(new List<RepairCase> { tv, boombox, iPhone })
+            {
+                phone
+            };
+            CollectionAssert.AreEqual(new RepairCases(new List<RepairCase> { tv, boombox, phone, iPhone }).ToArray(), 
+                repairCasesFour.ToArray());
         }
 
         [TestMethod]
