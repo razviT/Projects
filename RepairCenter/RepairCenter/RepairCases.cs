@@ -7,10 +7,10 @@ namespace RepairCenter
 {
     public class RepairCases : IEnumerable<RepairCase>
     {
-        private List<RepairCase> allRepairCases;
-        public RepairCases(List<RepairCase> allRepairCases)
+        private  List<RepairCase> allRepairCases;
+        public RepairCases(IEnumerable<RepairCase> allRepairCases)
         {
-            this.allRepairCases = allRepairCases;
+            this.allRepairCases =(List<RepairCase>) allRepairCases;
         }
 
         public IEnumerator<RepairCase> GetEnumerator()
@@ -20,23 +20,32 @@ namespace RepairCenter
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return ((IEnumerable<RepairCase>)allRepairCases).GetEnumerator();
+            return allRepairCases.GetEnumerator();
         }
 
-        public List<RepairCase> AddRepairCaseInOrderOfPriority(RepairCase newRepairCase)
+        public void Add(RepairCase newRepairCase)
         {
             int index = 0;
-            foreach (RepairCase repairCase in allRepairCases)
+            bool added = false;
+            foreach (RepairCase repairCase in allRepairCases.ToArray())
             {
                 if (repairCase.ConvertPriorityToInteger() < newRepairCase.ConvertPriorityToInteger())
                 {
                     allRepairCases.Insert(index, newRepairCase);
-                    return allRepairCases;
-                }
+                    added = true;
+                    break;
+                }                
                 index++;
             }
-            allRepairCases.Insert(allRepairCases.Count, newRepairCase);
-            return allRepairCases;
+            if (!added)
+            {
+                allRepairCases.Insert(allRepairCases.Count, newRepairCase);
+            }                   
+        }
+
+        public RepairCase GetNextCase()
+        {
+           return allRepairCases[0];
         }
     } 
     public class RepairCasesEnumerator : IEnumerator<RepairCase>
@@ -66,8 +75,7 @@ namespace RepairCenter
         }
 
         public void Dispose()
-        {
-            throw new NotImplementedException();
+        {         
         }
 
         public bool MoveNext()
