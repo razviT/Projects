@@ -8,27 +8,27 @@ namespace RepairCenter
     public class RepairCaseTest
     {
         [TestMethod]
-        public void ConvertPriorityToIntegerTest()
+        public void GetPriorityInIntTest()
         {
-            Assert.AreEqual(new RepairCase("ItemOne", "Low").ConvertPriorityToInteger(), 1);
+            Assert.AreEqual(new RepairCase("ItemOne", "Low").GetPriorityInInt(), 1);
         }
 
         [TestMethod]
-        public void ConvertPriorityToIntegerTestTwo()
+        public void GetPriorityInIntTestTwo()
         {
-            Assert.AreEqual(new RepairCase("ItemTwo", "High").ConvertPriorityToInteger(), 3);
+            Assert.AreEqual(new RepairCase("ItemTwo", "High").GetPriorityInInt(), 3);
         }
 
         [TestMethod]
-        public void ConvertPriorityToIntegerTestThree()
+        public void GetPriorityInIntTestThree()
         {
-            Assert.AreEqual(new RepairCase("Item Three", "Medium").ConvertPriorityToInteger(), 2);
+            Assert.AreEqual(new RepairCase("Item Three", "Medium").GetPriorityInInt(), 2);
         }
 
         [TestMethod]
-        public void ConvertPriorityToIntegerTestFour()
+        public void GetPriorityInIntTestFour()
         {
-            Assert.AreEqual(new RepairCase("item four", "no priority").ConvertPriorityToInteger(), 0);
+            Assert.AreEqual(new RepairCase("item four", "no priority").GetPriorityInInt(), 0);
         }      
     }
 }

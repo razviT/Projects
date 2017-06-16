@@ -13,54 +13,58 @@ namespace RepairCenter
         private static readonly RepairCase boombox = new RepairCase("Boombox", "Medium");
 
         [TestMethod]
-        public void TestAddRepairCaseInOrderOfPriority()
+        public void AddTest()
         {
             var repairCasesOne = new RepairCases(new List<RepairCase> { });
             repairCasesOne.Add(tv);          
-            CollectionAssert.AreEqual( new RepairCases(new List<RepairCase> { tv }).ToArray(), repairCasesOne.ToArray());
+            CollectionAssert.AreEqual( new RepairCases(new List<RepairCase> { tv }).ToArray(), 
+                repairCasesOne.ToArray());
         }
 
         [TestMethod]
-        public void TestAddRepairCaseInOrderOfPriorityTwo()
+        public void AddTestTwo()
         {
             var repairCasesTwo = new RepairCases(new List<RepairCase> { tv });
             repairCasesTwo.Add(iPhone);
-            CollectionAssert.AreEqual(new RepairCases(new List<RepairCase> { tv, iPhone }).ToArray(), repairCasesTwo.ToArray());
+            CollectionAssert.AreEqual(new RepairCases(new List<RepairCase> { tv, iPhone }).ToArray(), 
+                repairCasesTwo.ToArray());
         }
 
         [TestMethod]
-        public void TestAddRepairCaseInOrderOfPriorityThree()
+        public void AddTestThree()
         {
-            var repairCasesThree = new RepairCases(new List<RepairCase> { tv, iPhone });
-            repairCasesThree.Add(boombox);          
+            var repairCasesThree = new RepairCases(new List<RepairCase> { tv, iPhone })
+            {
+                boombox
+            };
             CollectionAssert.AreEqual(new RepairCases(new List<RepairCase> { tv, boombox, iPhone }).ToArray(),
                 repairCasesThree.ToArray());
         }
 
         [TestMethod]
-        public void TestAddRepairCaseInOrderOfPriorityFour ()
+        public void AddTestFour ()
         {
             var repairCasesFour = new RepairCases(new List<RepairCase> { tv, boombox, iPhone })
             {
-                phone
+                { "another case", "high" }
             };
             CollectionAssert.AreEqual(new RepairCases(new List<RepairCase> { tv, boombox, phone, iPhone }).ToArray(), 
                 repairCasesFour.ToArray());
         }
 
         [TestMethod]
-        public void TestGetNextCase()
+        public void GetNextTest()
         {
-            var repairCasesFive =new RepairCases(new List<RepairCase> { tv, boombox, iPhone });
+            var repairCasesFive = new RepairCases(new List<RepairCase> { tv, boombox, iPhone });
             repairCasesFive.Add(phone);
-            Assert.AreEqual(tv, repairCasesFive.GetNextCase());
+            Assert.AreEqual(tv, repairCasesFive.GetNext());
         }
 
         [TestMethod]
-        public void TestGetNextCaseTwo()
+        public void GetNextTestTwo()
         {
             var repairCasesSix = new RepairCases(new List<RepairCase> {boombox, iPhone });
-            Assert.AreEqual(boombox, repairCasesSix.GetNextCase());
+            Assert.AreEqual(boombox, repairCasesSix.GetNext());
         }
     }
 }

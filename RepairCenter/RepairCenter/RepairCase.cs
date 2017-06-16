@@ -10,7 +10,7 @@
             this.priority = priority;
         }
 
-        public int ConvertPriorityToInteger()
+        public int GetPriorityInInt()
         {         
             switch (priority)
             {
