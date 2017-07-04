@@ -1,6 +1,7 @@
-﻿var stringInput = document.createElement("input");
-var textThree = document.createTextNode(" String to add instead of letter: ");
+﻿var stringInputParagraph = document.createElement("p");
+var stringInput = document.createElement("input");
+var textThree = document.createTextNode("String to add  in :");
 stringInput.id = "stringInputId";
 stringInput.value = "";
-inputParagraph.appendChild(textThree);
-inputParagraph.appendChild(stringInput);
+stringInputParagraph.appendChild(textThree);
+stringInputParagraph.appendChild(stringInput);

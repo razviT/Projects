@@ -6,19 +6,13 @@
 
   <ItemGroup>
     <Content Include="wwwroot\ClientPage.html" />
-    <Content Include="wwwroot\createInterface.js" />
-    <Content Include="wwwroot\scriptFunctions.js" />
-    <Content Include="wwwroot\Scripts\createInterface.js" />
-    <Content Include="wwwroot\Scripts\InterfaceElements\Button.js" />
-    <Content Include="wwwroot\Scripts\InterfaceElements\CreatePage.js" />
-    <Content Include="wwwroot\Scripts\InterfaceElements\JavaScript.js" />
-    <Content Include="wwwroot\Scripts\InterfaceElements\JavaScript1.js" />
-    <Content Include="wwwroot\Scripts\InterfaceElements\JavaScript2.js" />
-    <Content Include="wwwroot\Scripts\InterfaceElements\LetterInput.js" />
-    <Content Include="wwwroot\Scripts\InterfaceElements\Result.js" />
-    <Content Include="wwwroot\Scripts\InterfaceElements\StringInput.js" />
-    <Content Include="wwwroot\Scripts\InterfaceElements\TextInput.js" />
-    <Content Include="wwwroot\Scripts\scriptFunctions.js" />
+    <Content Include="wwwroot\Scripts\PageElements\Button.js" />
+    <Content Include="wwwroot\Scripts\PageElements\CreatePage.js" />
+    <Content Include="wwwroot\Scripts\PageElements\LetterInput.js" />
+    <Content Include="wwwroot\Scripts\PageElements\Result.js" />
+    <Content Include="wwwroot\Scripts\PageElements\StringInput.js" />
+    <Content Include="wwwroot\Scripts\PageElements\TextInput.js" />
+    <Content Include="wwwroot\Scripts\PageFunctions.js" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.0.0" />

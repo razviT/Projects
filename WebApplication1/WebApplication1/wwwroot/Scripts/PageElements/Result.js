@@ -1,8 +1,10 @@
-﻿var spaceParagraph = document.createElement("p");
+﻿var block = document.createElement("div");
+var spaceParagraph = document.createElement("p");
 var writing = document.createTextNode(" Resulting text : ");
 var resultingText = document.createElement("textarea");
 resultingText.id = "resultingTextId";
-var block = document.createElement("div");
+block.style.fontSize = "30px";
+block.style.fontFamily = "fantasy";
 block.hidden = true;
 block.appendChild(spaceParagraph);
 block.appendChild(writing);
