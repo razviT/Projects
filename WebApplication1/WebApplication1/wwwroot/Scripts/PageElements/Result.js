@@ -1,0 +1,10 @@
+﻿var spaceParagraph = document.createElement("p");
+var writing = document.createTextNode(" Resulting text : ");
+var resultingText = document.createElement("textarea");
+resultingText.id = "resultingTextId";
+var block = document.createElement("div");
+block.hidden = true;
+block.appendChild(spaceParagraph);
+block.appendChild(writing);
+block.appendChild(spaceParagraph);
+block.appendChild(resultingText);

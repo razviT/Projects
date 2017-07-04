@@ -2,92 +2,16 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title></title>   
+    <title></title>
 </head>
 
-<body id="body">
-    <script>
-       
-        var header = document.createElement("p");
-        var text = document.createTextNode(" Input text: ");
-        header.appendChild(text);
-
-        var inputParagraph = document.createElement("p");
-        var textInput = document.createElement("textarea");
-        textInput.id = "textInputId";
-        textInput.value = null;
-        inputParagraph.appendChild(textInput);
-
-        var letterInput = document.createElement("input");
-        var textTwo = document.createTextNode(" Letter to replace: ");
-        letterInput.id = "letterInputId";
-        letterInput.value = null;
-        inputParagraph.appendChild(textTwo);
-        inputParagraph.appendChild(letterInput);
-
-        var stringInput = document.createElement("input");
-        var textThree = document.createTextNode(" String to add instead of letter: ");
-        stringInput.id = "stringInputId";
-        stringInput.value = null;
-        inputParagraph.appendChild(textThree);
-        inputParagraph.appendChild(stringInput);
-
-        var buttonParagraph = document.createElement("p");
-        var button = document.createElement("button");
-        var buttonText = document.createTextNode("Replace letter");      
-        button.id = "buttonId";
-        button.onclick = doOnClick;                            
-        button.appendChild(buttonText);
-        buttonParagraph.appendChild(button);
-        document.body.appendChild(header);
-        document.body.appendChild(inputParagraph);
-        document.body.appendChild(buttonParagraph);
-
-        var data = {
-            text: "",
-            letter: "",
-            stringToAdd:""
-        }
-  
-        function getData(data) {         
-            data.text = textInput.value;
-            data.letter = letterInput.value;
-            data.stringToAdd = stringInput.value;
-        }       
-        function clear() {
-            var myNode = document.getElementById("body");
-            myNode.innerHTML = '';
-        }
-        var resultingText = document.createElement("textarea");
-
-        function createTextArea() {        
-            var spaceParagraph = document.createElement("p");
-            var writing = document.createTextNode(" Resulting text : ");          
-            resultingText.id = "resultingTextId";
-            document.body.appendChild(writing);
-            document.body.appendChild(spaceParagraph);
-            document.body.appendChild(resultingText);
-        }       
-        function doOnClick() {
-            getData(data);
-            clear();
-            createTextArea();
-            createNewText(data);
-        }     
-
-        function createNewText(data) {
-            var xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function () {
-                if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-                    var newText = this.responseText;
-                    resultingText.value = newText;                
-                }
-            };
-            xhttp.open("Post", "api/values",  true);
-            xhttp.setRequestHeader("Content-Type", "application/json");
-            xhttp.send(JSON.stringify(data));    
-        }            
-    </script>
- 
+<body id="body">  
+    <script src="Scripts/PageElements/TextInput.js"></script>
+    <script src="Scripts/PageElements/LetterInput.js"></script>
+    <script src="Scripts/PageElements/StringInput.js"></script>
+    <script src="Scripts/PageElements/Button.js"></script>
+    <script src="Scripts/PageElements/Result.js"></script>
+    <script src="Scripts/PageElements/CreatePage.js"></script>
+    <script src="Scripts/scriptFunctions.js"></script>
 </body>
 </html>
