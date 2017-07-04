@@ -21,12 +21,14 @@
         var letterInput = document.createElement("input");
         var textTwo = document.createTextNode(" Letter to replace: ");
         letterInput.id = "letterInputId";
+        letterInput.value = null;
         inputParagraph.appendChild(textTwo);
         inputParagraph.appendChild(letterInput);
 
         var stringInput = document.createElement("input");
         var textThree = document.createTextNode(" String to add instead of letter: ");
         stringInput.id = "stringInputId";
+        stringInput.value = null;
         inputParagraph.appendChild(textThree);
         inputParagraph.appendChild(stringInput);
 
@@ -44,25 +46,24 @@
         var data = {
             text: "",
             letter: "",
-            string:""
+            stringToAdd:""
         }
   
         function getData(data) {         
             data.text = textInput.value;
             data.letter = letterInput.value;
-            data.string = stringInput.value;
+            data.stringToAdd = stringInput.value;
         }       
         function clear() {
             var myNode = document.getElementById("body");
             myNode.innerHTML = '';
         }
+        var resultingText = document.createElement("textarea");
 
         function createTextArea() {        
             var spaceParagraph = document.createElement("p");
-            var writing = document.createTextNode(" Resulting text : ");
-            var resultingText = document.createElement("textarea");
+            var writing = document.createTextNode(" Resulting text : ");          
             resultingText.id = "resultingTextId";
-            resultingText.value = data.text;
             document.body.appendChild(writing);
             document.body.appendChild(spaceParagraph);
             document.body.appendChild(resultingText);
@@ -70,32 +71,22 @@
         function doOnClick() {
             getData(data);
             clear();
-            createTextArea();       
+            createTextArea();
+            createNewText(data);
         }     
 
-        /*
-        function uploadData(data) {
-            var xhr = new XMLHttpRequest();
-            var url = "url";
-            xhr.open("POST", "api/values", true);
-            xhr.setRequestHeader("Content-type", "application/json");
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState === 4 && xhr.status === 200) {
-                    var json = JSON.parse(xhr.responseText);
+        function createNewText(data) {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+                    var newText = this.responseText;
+                    resultingText.value = newText;                
                 }
-            }
-            var dataU = JSON.stringify(data);
-            xhr.send(dataU);
-        }              
-        /*fetch("api/values").then(response =>
-
-            response.json().then(json => {
-
-                document.getElementById("text").innerText += json;
-            }));*/
-        
-
-
+            };
+            xhttp.open("Post", "api/values",  true);
+            xhttp.setRequestHeader("Content-Type", "application/json");
+            xhttp.send(JSON.stringify(data));    
+        }            
     </script>
  
 </body>

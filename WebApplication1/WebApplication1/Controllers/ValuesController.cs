@@ -2,15 +2,14 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace WebApplication1.Controllers
 {
     [Route("api/[controller]")]
     public class ValuesController : Controller
     {
-
-        CharReplace charReplace = new CharReplace();
-
+     
         // GET api/values
         [HttpGet]
         public IEnumerable<string> Get()
@@ -22,17 +21,15 @@ namespace WebApplication1.Controllers
         [HttpGet("{id}")]
         public string Get(int id)
         {
-            return "value";
+            return "";
         }
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody]string value)
+        public string Post([FromBody] CharReplace value)
         {
-            dynamic stuff = Json(value);
-            charReplace.text = stuff[0];
-            charReplace.letter = stuff[1];
-            charReplace.stringToAdd = stuff[2];
+            value.ReplaceCharInString();
+            return value.text;         
         }
 
         // PUT api/values/5
