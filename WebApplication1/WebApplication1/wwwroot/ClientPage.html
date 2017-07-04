@@ -1,0 +1,102 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>   
+</head>
+
+<body id="body">
+    <script>
+       
+        var header = document.createElement("p");
+        var text = document.createTextNode(" Input text: ");
+        header.appendChild(text);
+
+        var inputParagraph = document.createElement("p");
+        var textInput = document.createElement("textarea");
+        textInput.id = "textInputId";
+        textInput.value = null;
+        inputParagraph.appendChild(textInput);
+
+        var letterInput = document.createElement("input");
+        var textTwo = document.createTextNode(" Letter to replace: ");
+        letterInput.id = "letterInputId";
+        inputParagraph.appendChild(textTwo);
+        inputParagraph.appendChild(letterInput);
+
+        var stringInput = document.createElement("input");
+        var textThree = document.createTextNode(" String to add instead of letter: ");
+        stringInput.id = "stringInputId";
+        inputParagraph.appendChild(textThree);
+        inputParagraph.appendChild(stringInput);
+
+        var buttonParagraph = document.createElement("p");
+        var button = document.createElement("button");
+        var buttonText = document.createTextNode("Replace letter");      
+        button.id = "buttonId";
+        button.onclick = doOnClick;                            
+        button.appendChild(buttonText);
+        buttonParagraph.appendChild(button);
+        document.body.appendChild(header);
+        document.body.appendChild(inputParagraph);
+        document.body.appendChild(buttonParagraph);
+
+        var data = {
+            text: "",
+            letter: "",
+            string:""
+        }
+  
+        function getData(data) {         
+            data.text = textInput.value;
+            data.letter = letterInput.value;
+            data.string = stringInput.value;
+        }       
+        function clear() {
+            var myNode = document.getElementById("body");
+            myNode.innerHTML = '';
+        }
+
+        function createTextArea() {        
+            var spaceParagraph = document.createElement("p");
+            var writing = document.createTextNode(" Resulting text : ");
+            var resultingText = document.createElement("textarea");
+            resultingText.id = "resultingTextId";
+            resultingText.value = data.text;
+            document.body.appendChild(writing);
+            document.body.appendChild(spaceParagraph);
+            document.body.appendChild(resultingText);
+        }       
+        function doOnClick() {
+            getData(data);
+            clear();
+            createTextArea();       
+        }     
+
+        /*
+        function uploadData(data) {
+            var xhr = new XMLHttpRequest();
+            var url = "url";
+            xhr.open("POST", "api/values", true);
+            xhr.setRequestHeader("Content-type", "application/json");
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    var json = JSON.parse(xhr.responseText);
+                }
+            }
+            var dataU = JSON.stringify(data);
+            xhr.send(dataU);
+        }              
+        /*fetch("api/values").then(response =>
+
+            response.json().then(json => {
+
+                document.getElementById("text").innerText += json;
+            }));*/
+        
+
+
+    </script>
+ 
+</body>
+</html>
