@@ -1,12 +1,11 @@
-﻿using System;
-
-namespace WebApplication1.Controllers
+﻿namespace WebApplication1.Controllers
 {
     public class CharReplace
     {
         public string text { get; set; }
         public string letter { get; set; }
         public string stringToAdd { get; set; }
+
         public void ReplaceCharInString()
         {
             if (text.Length == 0)
@@ -16,7 +15,7 @@ namespace WebApplication1.Controllers
             else
             {
                 text = text.Replace(letter, stringToAdd);
-            }                   
+            }
         }
     }
 }

@@ -1,8 +1,6 @@
-﻿var buttonParagraph = document.createElement("p");
-buttonParagraph.style.fontSize = "25px";
-var button = document.createElement("button");
-var buttonText = document.createTextNode("Replace letter");
-button.id = "buttonId";
-button.style.fontFamily = "cursive";
-button.appendChild(buttonText);
-buttonParagraph.appendChild(button);
+﻿var buttonDiv = $("<div>", { id: "buttonDivId" });
+var button = $("<button>", { id: "buttonId", class: "buttonStyle" });
+$(button).css("marginLeft", "185px");
+var buttonText = $(document.createTextNode("Replace letter"));
+$(button).append(buttonText);
+$(buttonDiv).append(button);

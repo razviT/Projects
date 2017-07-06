@@ -1,35 +1,30 @@
-﻿function getData(data) {
-    data.text = textInput.value;
-    data.letter = letterInput.value;
-    data.stringToAdd = stringInput.value;
-}
-function clear() {
-    var myNode = document.getElementById("body");
-    myNode.innerHTML = '';
+﻿function getData() {
+    info.text = $(textInput).val();
+    info.letter = $(letterInput).val();
+    info.stringToAdd = $(stringInput).val();
 }
 
 function createTextArea() {
-    block.hidden = false;
+    $(outputDiv).attr("hidden", false);
 }
-
-function createNewText(data) {
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function () {
-        if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-            var newText = this.responseText;
-            resultingText.value = newText;
+function createNewText(info) {
+    $.ajax({
+        url: 'api/values',
+        dataType: 'text',
+        type: 'POST',
+        contentType: 'application/json ; charset=utf - 8',
+        data: JSON.stringify(info),
+        success: function (data) {
+            $(resultingText).val(data);
+        },
+        error: function (jqXhr, textStatus, errorThrown) {
+            $(resultingText).val("erroooooor");
         }
-    };
-    xhttp.open("Post", "api/values", true);
-    xhttp.setRequestHeader("Content-Type", "application/json");
-    xhttp.send(JSON.stringify(data));
+    });
 }
 
-function doOnClick() {
-    getData(data);
-    //clear();
+$(button).click(function () {
+    getData();
     createTextArea();
-    createNewText(data);
-}
-
-button.onclick = doOnClick;
+    createNewText(info);
+});

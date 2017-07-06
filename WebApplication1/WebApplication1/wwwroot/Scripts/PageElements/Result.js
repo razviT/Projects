@@ -1,12 +1,6 @@
-﻿var block = document.createElement("div");
-var spaceParagraph = document.createElement("p");
-var writing = document.createTextNode(" Resulting text : ");
-var resultingText = document.createElement("textarea");
-resultingText.id = "resultingTextId";
-block.style.fontSize = "30px";
-block.style.fontFamily = "fantasy";
-block.hidden = true;
-block.appendChild(spaceParagraph);
-block.appendChild(writing);
-block.appendChild(spaceParagraph);
-block.appendChild(resultingText);
+﻿var outputDiv = $("<div>", { id: "outputDivId", class: "outputStyle", hidden: true });
+var resultingText = $("<textarea>", { id: "resultingTextId", value: "", height: "14px", width: "790px" });
+var writing = $(document.createTextNode("Output text:"));
+$(writing).css("color", "red");
+$(outputDiv).append(writing);
+$(outputDiv).append(resultingText);

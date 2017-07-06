@@ -1,8 +1,9 @@
-﻿var inputParagraph = document.createElement("p");
-inputParagraph.style.fontSize = "25px";
-var text = document.createTextNode(" Input text: ");
-var textInput = document.createElement("textarea");
-textInput.id = "textInputId";
-textInput.value = "";
-inputParagraph.appendChild(text);
-inputParagraph.appendChild(textInput);
+﻿var inputDiv = $("<div>", { id: "inputDivId", class: "inputStyle" });
+var textDiv = $("<div>", { id: "TextDivId", class: "textStyle" });
+var textNode = $(document.createTextNode("Input text :"));
+var textInput = $("<textarea>", {
+    id: "textInputId", height: "14px", width: "800px"
+});
+$(textInput).css("background", "#EDFFDD");
+$(textDiv).append(textNode);
+$(textDiv).append(textInput);

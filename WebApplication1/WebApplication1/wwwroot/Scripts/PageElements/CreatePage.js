@@ -1,12 +1,10 @@
-﻿
+﻿$(inputDiv).append(textDiv);
+$(inputDiv).append(letterAndStringDiv);
+$(inputDiv).append(buttonDiv);
+$(document.body).append(inputDiv);
+$(document.body).append(outputDiv);
 
-document.body.appendChild(inputParagraph);
-document.body.appendChild(letterInputParagraph);
-document.body.appendChild(stringInputParagraph);
-document.body.appendChild(buttonParagraph);
-document.body.appendChild(block);
-
-var data = {
+var info = {
     text: "",
     letter: "",
     stringToAdd: ""
