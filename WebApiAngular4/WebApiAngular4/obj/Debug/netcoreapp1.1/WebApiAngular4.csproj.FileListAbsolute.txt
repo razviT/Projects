@@ -1,0 +1,9 @@
+C:\Users\TamasR\Documents\Projects\WebApiAngular4\WebApiAngular4\bin\Debug\netcoreapp1.1\WebApiAngular4.deps.json
+C:\Users\TamasR\Documents\Projects\WebApiAngular4\WebApiAngular4\bin\Debug\netcoreapp1.1\WebApiAngular4.runtimeconfig.json
+C:\Users\TamasR\Documents\Projects\WebApiAngular4\WebApiAngular4\bin\Debug\netcoreapp1.1\WebApiAngular4.runtimeconfig.dev.json
+C:\Users\TamasR\Documents\Projects\WebApiAngular4\WebApiAngular4\bin\Debug\netcoreapp1.1\WebApiAngular4.dll
+C:\Users\TamasR\Documents\Projects\WebApiAngular4\WebApiAngular4\bin\Debug\netcoreapp1.1\WebApiAngular4.pdb
+C:\Users\TamasR\Documents\Projects\WebApiAngular4\WebApiAngular4\obj\Debug\netcoreapp1.1\WebApiAngular4.AssemblyInfo.cs
+C:\Users\TamasR\Documents\Projects\WebApiAngular4\WebApiAngular4\obj\Debug\netcoreapp1.1\WebApiAngular4.dll
+C:\Users\TamasR\Documents\Projects\WebApiAngular4\WebApiAngular4\obj\Debug\netcoreapp1.1\WebApiAngular4.pdb
+c:\users\tamasr\Documents\Projects\WebApiAngular4\WebApiAngular4\obj\Debug\netcoreapp1.1\WebApiAngular4.csprojResolveAssemblyReference.cache
