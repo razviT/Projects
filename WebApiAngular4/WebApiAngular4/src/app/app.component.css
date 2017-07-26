@@ -1,25 +1,29 @@
 ﻿button {
   background-color: #7dd47d;
-  border: 3px solid #777;
-  height:40px;
-  width:180px;
+  border: 3px solid #ffd800;
+  height: 40px;
+  width: 180px;
 }
+
 div {
-  background-color: aquamarine;
-  font-family:cursive;
+  background-color: #c6bfbf;
+  font-family: cursive;
 }
-input{
-  background-color:deepskyblue;
-  width:75px;
-  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+
+input {
+  background-color: #5dbddd;
+  width: 100px;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
 }
-textarea{
-  background-color:black;
-  color:white;
-  width:175px;
-  height:60px;
-  font-size:20px;
+
+textarea {
+  background-color: black;
+  color: white;
+  width: 175px;
+  height: 60px;
+  font-size: 20px;
 }
-label{
-  font-size:25px;
+
+label {
+  font-size: 25px;
 }
